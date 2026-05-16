@@ -203,11 +203,24 @@ class WebViewComponent extends React.Component {
             allowsLinkPreview={true}
             hideKeyboardAccessoryView={!Platform.isPad}
             webviewDebuggingEnabled={true}
-            injectedJavaScriptBeforeContentLoaded={
-              Platform.OS === 'ios'
-                ? 'window.__discourseHubDownloadBridge = true; true;'
-                : undefined
-            }
+            domStorageEnabled={true}
+            injectedJavaScriptBeforeContentLoaded={`
+              ${Platform.OS === 'ios' ? 'window.__discourseHubDownloadBridge = true;' : ''}
+              (function() {
+                var meta = document.querySelector('meta[name="viewport"]');
+                if (meta) {
+                  if (meta.content.indexOf('viewport-fit') === -1) {
+                    meta.content = meta.content + ', viewport-fit=cover';
+                  }
+                } else {
+                  var newMeta = document.createElement('meta');
+                  newMeta.name = 'viewport';
+                  newMeta.content = 'width=device-width, initial-scale=1, viewport-fit=cover';
+                  document.head.appendChild(newMeta);
+                }
+              })();
+              true;
+            `}
             onLoadEnd={() => {
               this.webview.requestFocus();
             }}
@@ -394,6 +407,7 @@ class WebViewComponent extends React.Component {
   }
 
   _sendAppStateChange(appState) {
+    if (!this.webview) return;
     const appStateChange = `
       window.dispatchEvent(new CustomEvent("AppStateChange", { detail: { newAppState: "${appState}" } }));
       true;

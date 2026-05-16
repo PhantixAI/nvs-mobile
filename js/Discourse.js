@@ -26,6 +26,7 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import Screens from './screens';
+import SingleSiteWebView from './screens/SingleSiteWebView';
 import Site from './site';
 import SiteManager from './site_manager';
 import SafariView from 'react-native-safari-view';
@@ -41,6 +42,7 @@ import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { BlurView } from '@react-native-community/blur';
 
 import BackgroundFetch from './platforms/background-fetch';
+import AppConfig from './AppConfig';
 
 const { DiscourseKeyboardShortcuts } = NativeModules;
 
@@ -227,7 +229,7 @@ class Discourse extends React.Component {
   async _handleOpenUrl(event) {
     console.log('_handleOpenUrl', event);
 
-    if (event.url.startsWith('discourse://')) {
+    if (event.url.startsWith(`${AppConfig.urlScheme}://`)) {
       const params = this._siteManager.parseURLparameters(event.url);
       const site = this._siteManager.activeSite;
 
@@ -445,17 +447,11 @@ class Discourse extends React.Component {
     }
 
     if (Platform.OS === 'android') {
-      AsyncStorage.getItem('@Discourse.androidCustomTabs').then(value => {
-        if (value === 'true') {
-          CustomTabs.openURL(url, {
-            enableUrlBarHiding: true,
-            showPageTitle: false,
-          }).catch(err => {
-            console.error(err);
-          });
-        } else {
-          Linking.openURL(url);
-        }
+      CustomTabs.openURL(url, {
+        enableUrlBarHiding: true,
+        showPageTitle: false,
+      }).catch(err => {
+        Linking.openURL(url);
       });
     }
   }
@@ -526,89 +522,94 @@ class Discourse extends React.Component {
             }}
           >
             <Stack.Screen name="HomeWrapper">
-              {() => (
-                <Tab.Navigator
-                  screenOptions={{
-                    headerShown: false,
-
-                    tabBarStyle: {
-                      position: 'absolute',
-                      borderTopWidth: StyleSheet.hairlineWidth,
-                      borderTopColor: theme.grayBorder,
-                    },
-                    tabBarLabelStyle: {
-                      fontSize: this.state.largerUI ? 16 : 12,
-                    },
-                    tabBarActiveTintColor: theme.blueCallToAction,
-                    tabBarInactiveTintColor: theme.grayTabInactiveColor,
-                    tabBarBackground: () => this._blurView(theme.name),
-                  }}
-                >
-                  <Tab.Screen
-                    name="Home"
-                    options={{
-                      title: i18n.t('home'),
-                      tabBarIcon: ({ color }) => (
-                        <FontAwesome5
-                          name={'home'}
-                          size={18}
-                          color={color}
-                          iconStyle="solid"
-                        />
-                      ),
+              {() =>
+                AppConfig.siteURL ? (
+                  // Single-site (white-label) mode: full-screen Discourse web app
+                  <SingleSiteWebView screenProps={screenProps} />
+                ) : (
+                  // Multi-site mode: standard tab navigator
+                  <Tab.Navigator
+                    screenOptions={{
+                      headerShown: false,
+                      tabBarStyle: {
+                        position: 'absolute',
+                        borderTopWidth: StyleSheet.hairlineWidth,
+                        borderTopColor: theme.grayBorder,
+                      },
+                      tabBarLabelStyle: {
+                        fontSize: this.state.largerUI ? 16 : 12,
+                      },
+                      tabBarActiveTintColor: theme.blueCallToAction,
+                      tabBarInactiveTintColor: theme.grayTabInactiveColor,
+                      tabBarBackground: () => this._blurView(theme.name),
                     }}
                   >
-                    {props => (
-                      <Screens.Home
-                        {...props}
-                        screenProps={{ ...screenProps }}
-                      />
-                    )}
-                  </Tab.Screen>
-                  <Tab.Screen
-                    name="Discover"
-                    options={{
-                      title: i18n.t('discover'),
-                      tabBarIcon: ({ color }) => (
-                        <FontAwesome5
-                          name={'compass'}
-                          size={18}
-                          color={color}
-                          iconStyle="solid"
+                    <Tab.Screen
+                      name="Home"
+                      options={{
+                        title: i18n.t('home'),
+                        tabBarIcon: ({ color }) => (
+                          <FontAwesome5
+                            name={'home'}
+                            size={18}
+                            color={color}
+                            iconStyle="solid"
+                          />
+                        ),
+                      }}
+                    >
+                      {props => (
+                        <Screens.Home
+                          {...props}
+                          screenProps={{ ...screenProps }}
                         />
-                      ),
-                    }}
-                  >
-                    {props => (
-                      <Screens.Discover
-                        {...props}
-                        screenProps={{ ...screenProps }}
-                      />
-                    )}
-                  </Tab.Screen>
-                  <Tab.Screen
-                    name={'Notifications'}
-                    options={{
-                      title: i18n.t('notifications'),
-                      tabBarIcon: ({ color }) => (
-                        <FontAwesome5
-                          name={'bell'}
-                          size={18}
-                          color={color}
-                          iconStyle="solid"
+                      )}
+                    </Tab.Screen>
+                    <Tab.Screen
+                      name="Discover"
+                      options={{
+                        title: i18n.t('discover'),
+                        tabBarIcon: ({ color }) => (
+                          <FontAwesome5
+                            name={'compass'}
+                            size={18}
+                            color={color}
+                            iconStyle="solid"
+                          />
+                        ),
+                      }}
+                    >
+                      {props => (
+                        <Screens.Discover
+                          {...props}
+                          screenProps={{ ...screenProps }}
                         />
-                      ),
-                    }}
-                  >
-                    {props => (
-                      <Screens.Notifications
-                        {...props}
-                        screenProps={{ ...screenProps }}
-                      />
-                    )}
-                  </Tab.Screen>
-                </Tab.Navigator>
-              )}
+                      )}
+                    </Tab.Screen>
+                    <Tab.Screen
+                      name={'Notifications'}
+                      options={{
+                        title: i18n.t('notifications'),
+                        tabBarIcon: ({ color }) => (
+                          <FontAwesome5
+                            name={'bell'}
+                            size={18}
+                            color={color}
+                            iconStyle="solid"
+                          />
+                        ),
+                      }}
+                    >
+                      {props => (
+                        <Screens.Notifications
+                          {...props}
+                          screenProps={{ ...screenProps }}
+                        />
+                      )}
+                    </Tab.Screen>
+                  </Tab.Navigator>
+                )
+              }
             </Stack.Screen>
             <Stack.Screen
               name={'Settings'}

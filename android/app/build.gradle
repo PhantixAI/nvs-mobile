@@ -2,6 +2,14 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+// Map each flavor to its .env file so react-native-config picks up the right one automatically
+project.ext.envConfigFiles = [
+    navodians: ".env.navodians",
+    nitians: ".env.nitians",
+    iitians: ".env.iitians",
+]
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -84,16 +92,42 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 243
+        versionCode 246
         versionName MYAPP_VERSION
+        resValue "string", "build_config_package", "com.discourse"
     }
 
     signingConfigs {
         release {
-            storeFile file(MYAPP_RELEASE_STORE_FILE)
-            storePassword MYAPP_RELEASE_STORE_PASSWORD
-            keyAlias MYAPP_RELEASE_KEY_ALIAS
-            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            def keystoreFile = file(MYAPP_RELEASE_STORE_FILE)
+            if (keystoreFile.exists()) {
+                storeFile keystoreFile
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    flavorDimensions "app"
+    productFlavors {
+        navodians {
+            dimension "app"
+            applicationId "com.navodians.app"
+            manifestPlaceholders = [appUrlScheme: "navodians"]
+            resValue "string", "app_name", "Navodians"
+        }
+        nitians {
+            dimension "app"
+            applicationId "in.nitians.app"
+            manifestPlaceholders = [appUrlScheme: "nitians"]
+            resValue "string", "app_name", "NITians"
+        }
+        iitians {
+            dimension "app"
+            applicationId "in.iitians.app"
+            manifestPlaceholders = [appUrlScheme: "iitians"]
+            resValue "string", "app_name", "APEX"
         }
     }
 

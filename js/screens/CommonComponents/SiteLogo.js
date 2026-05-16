@@ -10,6 +10,7 @@ export function isValidLogoUrl(url) {
 }
 
 function hashCode(str) {
+  if (!str) { return 0; }
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -41,6 +42,7 @@ const SiteLogo = ({
   }
 
   if (logoImage === false) {
+    const safeTitle = title || '?';
     return (
       <View
         style={[
@@ -53,19 +55,19 @@ const SiteLogo = ({
             marginTop: 2,
             borderRadius,
             marginHorizontal: 4,
-            backgroundColor: pickColor(title),
+            backgroundColor: pickColor(safeTitle),
           },
           style,
         ]}
       >
         <Text
           style={{
-            color: pickColor(title, true),
+            color: pickColor(safeTitle, true),
             fontSize,
             fontWeight: '700',
           }}
         >
-          {title[0]}
+          {safeTitle[0]}
         </Text>
       </View>
     );

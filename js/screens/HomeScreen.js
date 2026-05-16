@@ -10,8 +10,10 @@ import {
   View,
 } from 'react-native';
 import Components from './HomeScreenComponents';
+import TopicFeed from './HomeScreenComponents/TopicFeed';
 import Common from './CommonComponents';
 import { ThemeContext } from '../ThemeContext';
+import AppConfig from '../AppConfig';
 import i18n from 'i18n-js';
 import { donateShortcut } from 'react-native-siri-shortcut';
 import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
@@ -21,6 +23,8 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 
 class HomeScreen extends React.Component {
+  _autoOpened = false;
+
   constructor(props) {
     super(props);
 
@@ -42,6 +46,17 @@ class HomeScreen extends React.Component {
     this._onChangeSites = e => this.onChangeSites(e);
     this.onReordered = this.onReordered.bind(this);
     this._renderItem = this._renderItem.bind(this);
+  }
+
+  _tryAutoOpen() {
+    if (AppConfig.siteURL) { return; } // native feed handles single-site mode
+    if (this._autoOpened) return;
+    if (this._siteManager.isLoading()) return;
+    const site = this._siteManager.sites[0];
+    if (site) {
+      this._autoOpened = true;
+      this.visitSite(site);
+    }
   }
 
   async visitSite(site, connect = false, endpoint = '', options = {}) {
@@ -118,6 +133,9 @@ class HomeScreen extends React.Component {
   componentDidMount() {
     this._siteManager.subscribe(this._onChangeSites);
     this._onChangeSites();
+    if (AppConfig.siteURL) {
+      this._tryAutoOpen();
+    }
   }
 
   componentWillUnmount() {
@@ -134,6 +152,9 @@ class HomeScreen extends React.Component {
         hotTopicsHidden: this._siteManager.hotTopicsHidden,
         siteURLsHidden: this._siteManager.siteURLsHidden,
       });
+    }
+    if (AppConfig.siteURL) {
+      this._tryAutoOpen();
     }
   }
 
@@ -273,8 +294,16 @@ class HomeScreen extends React.Component {
     }
   }
 
-  onDidPressAndroidSettingsIcon() {
-    this.props.navigation.navigate('Settings');
+  async onDidPressLogout() {
+    const site = this._siteManager.sites[0];
+    if (!site) { return; }
+    try {
+      await site.revokeApiKey().catch(() => {});
+    } finally {
+      site.logoff();
+      this._siteManager.save();
+      this._siteManager._onChange();
+    }
   }
 
   onDidPressPlusIcon() {
@@ -284,15 +313,64 @@ class HomeScreen extends React.Component {
   render() {
     const theme = this.context;
 
+    if (AppConfig.siteURL) {
+      const site = this._siteManager.sites[0];
+
+      if (this.state.loadingSites || !site) {
+        return (
+          <SafeAreaView
+            style={[styles.container, { backgroundColor: theme.background }]}
+          >
+            <ActivityIndicator
+              style={{ flex: 1 }}
+              size="large"
+              color={theme.grayUI}
+            />
+          </SafeAreaView>
+        );
+      }
+
+      return (
+        <BottomTabBarHeightContext.Consumer>
+          {tabBarHeight => (
+            <SafeAreaView
+              style={[styles.container, { backgroundColor: theme.grayBackground }]}
+            >
+              <Components.NavigationBar
+                isLoggedIn={!!site?.authToken}
+                onDidPressLogin={() => this.visitSite(site, true)}
+                onDidPressLogout={() => this.onDidPressLogout()}
+                onDidPressPlusIcon={null}
+              />
+              <TopicFeed
+                site={site}
+                onClickTopic={url => this.props.screenProps.openUrl(url)}
+                onLogin={() => this.visitSite(site, true)}
+                tabBarHeight={tabBarHeight}
+              />
+              {this.state.authProcessActive && (
+                <View
+                  style={{
+                    ...styles.authenticatingOverlay,
+                    backgroundColor: theme.background,
+                  }}
+                >
+                  <ActivityIndicator size="large" color={theme.grayUI} />
+                </View>
+              )}
+            </SafeAreaView>
+          )}
+        </BottomTabBarHeightContext.Consumer>
+      );
+    }
+
     return (
       <>
         <SafeAreaView
           style={[styles.container, { backgroundColor: theme.background }]}
         >
           <Components.NavigationBar
-            onDidPressAndroidSettingsIcon={() =>
-              this.onDidPressAndroidSettingsIcon()
-            }
+            isLoggedIn={false}
             onDidPressPlusIcon={() => this.onDidPressPlusIcon()}
           />
           <View

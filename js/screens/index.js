@@ -7,7 +7,6 @@ import WebViewScreen from './WebViewScreen';
 import SettingsScreen from './SettingsScreen';
 import DiscoverScreen from './DiscoverScreen';
 import AddSiteScreen from './AddSiteScreen';
-
 module.exports = {
   Home: HomeScreen,
   Notifications: NotificationsScreen,

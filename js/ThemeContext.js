@@ -1,4 +1,5 @@
 import React from 'react';
+import AppConfig from './AppConfig';
 
 export const themes = {
   light: {
@@ -12,7 +13,7 @@ export const themes = {
     grayTabInactiveColor: '#454545',
     grayTitle: '#222',
     yellowUIFeedback: '#ffffa6',
-    blueCallToAction: '#08c',
+    blueCallToAction: AppConfig.primaryColor,
     blueUnread: '#0aadff',
     redDanger: '#ee512a',
     purpleChat: '#ad17f8',
@@ -32,7 +33,7 @@ export const themes = {
     grayTabInactiveColor: '#888',
     grayTitle: '#999',
     yellowUIFeedback: '#403f30',
-    blueCallToAction: '#0F82AF',
+    blueCallToAction: AppConfig.primaryColor,
     blueUnread: '#0F82AF',
     purpleChat: '#ad17f8',
     redDanger: '#e45735',

@@ -6156,6 +6156,7 @@ __metadata:
     react: "npm:19.1.0"
     react-native: "npm:^0.80.2"
     react-native-background-fetch: "npm:^4.2.3"
+    react-native-config: "npm:^1.6.1"
     react-native-custom-tabs: "https://github.com/adminphoeniixx/react-native-custom-tabs"
     react-native-device-info: "npm:^13.1.0"
     react-native-draggable-flatlist: "npm:^4.0.3"
@@ -11838,6 +11839,20 @@ __metadata:
   version: 4.2.8
   resolution: "react-native-background-fetch@npm:4.2.8"
   checksum: 10/0950fbc553bca05d424591fbea7ffe534b51068a66497a0cac36aee7341c3aac9ec06932164572753a0a1b8c0c0f5d8d8df01a34b5288c81cdf4db555cf5024d
+  languageName: node
+  linkType: hard
+
+"react-native-config@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "react-native-config@npm:1.6.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-windows: ">=0.61"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 10/22ab54833f1066c361d0baa52bebbd29f43d5b5ace45cbd3b4dd191220556f5d031284a39734bb1b12475a4365b50bd24d7ac9b304472e2aa24fa714f4bd12af
   languageName: node
   linkType: hard
 

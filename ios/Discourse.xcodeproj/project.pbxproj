@@ -7,13 +7,50 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		070395B7670C2AB56ED3A457 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E47551F2C996500AFDCBE /* Photos.framework */; };
+		0CA9CCDAEEDC567F97332542 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		103ED9A83303B84514B92A75 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BDEA363422D818BC0040787F /* Settings.bundle */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		16C99C7C5CDBBE28CED383E8 /* libPods-Discourse-APEX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B6AB6E3066AF20E251C054 /* libPods-Discourse-APEX.a */; };
+		1DB0E9831F5581EE32CCBAA6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		281E240BE3B73B2419FAE352 /* DiscourseKeyboardShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4A208127B54FA300574A58 /* DiscourseKeyboardShortcuts.m */; };
 		2D21EBACC6C4F9E264463A9D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */; };
+		3ADB85F3B2E92F1E81DD6D44 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */; };
+		3E94DC8E7B2FBF3821C6DB7C /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
+		4AF3AD7177A1816C0C23C47F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		4E232BF82834A5A8A0B7FFD6 /* libPods-Discourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35667425B8D25AC23B513768 /* libPods-Discourse.a */; };
+		50A7ED930A5672DE2EBC7AF9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */; };
+		519E533E36CA52000183DD27 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC4F76C248B4F9C00785AF9 /* Dummy.swift */; };
+		55490FF2F187D6F1F2BABEDB /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E47551F2C996500AFDCBE /* Photos.framework */; };
+		564AF81D5ABD25A484E24893 /* libPods-Discourse-NITians.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6C38892A0D8CD42C9A2D8C6 /* libPods-Discourse-NITians.a */; };
+		5EAC673CBFCFDCE1CC49A33C /* nav-icon-gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52583FD1E5551D7001E9B7C /* nav-icon-gray@3x.png */; };
+		630F915E109515B0E519344D /* nav-icon-gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52583FD1E5551D7001E9B7C /* nav-icon-gray@3x.png */; };
+		6B413E48579E3DE35A9F27AB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BDEA363422D818BC0040787F /* Settings.bundle */; };
+		6F3453258824763BEFEFB262 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */; };
+		743F3A349C8BBC13EBFD69BE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		7CF2E701DEC506258700E238 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		8059B5F4ED0B73C3F811D447 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		831FB33E81233961AF1DCA62 /* DiscourseKeyboardShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4A208127B54FA300574A58 /* DiscourseKeyboardShortcuts.m */; };
+		8370892B1BC6FBB390EBF9D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		86926817125C49686F7C05F8 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC4F76C248B4F9C00785AF9 /* Dummy.swift */; };
+		89049D5942FCBCEB03510FCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3675930C7AAA8D1B50076D97 /* Foundation.framework */; };
+		8AC134CBCEBB51A7CF9D282F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */; };
+		967A9B86915FCE3AADB1B416 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		986D5CE2F572671041E3CBC3 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD11887223DB333D00A2EFC9 /* RNBackgroundFetch+AppDelegate.m */; };
+		99EE557089925156628BA335 /* libPods-Discourse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35667425B8D25AC23B513768 /* libPods-Discourse.a */; };
+		9E27DA53E11591E992D61027 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */; };
+		A267EF984920AF69185541FF /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BDEA363422D818BC0040787F /* Settings.bundle */; };
+		A440E8A60D272BF348B8EE11 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC4F76C248B4F9C00785AF9 /* Dummy.swift */; };
+		A5779345BB01572B6963688F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		ABDADAB3FD02F90A26DBA06D /* DiscourseKeyboardShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4A208127B54FA300574A58 /* DiscourseKeyboardShortcuts.m */; };
+		AFD4C061E766A9BDCA2D3A45 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		B52583FE1E5551D7001E9B7C /* nav-icon-gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52583FD1E5551D7001E9B7C /* nav-icon-gray@3x.png */; };
+		B9FB92179AF5A5D0588E6B07 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		BA799D35CAA6E9243420B91E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		BA8A6A81E4691C5BD784ADDD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		BD11887323DB333E00A2EFC9 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD11887223DB333D00A2EFC9 /* RNBackgroundFetch+AppDelegate.m */; };
 		BD4A208227B54FA300574A58 /* DiscourseKeyboardShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4A208127B54FA300574A58 /* DiscourseKeyboardShortcuts.m */; };
 		BD9F666023F5B02C001001B3 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F665F23F5B02C001001B3 /* ShareViewController.swift */; };
@@ -21,9 +58,18 @@
 		BD9F666723F5B02C001001B3 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BD9F665D23F5B02C001001B3 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BDC4F76D248B4F9C00785AF9 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC4F76C248B4F9C00785AF9 /* Dummy.swift */; };
 		BDEA363522D818BC0040787F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BDEA363422D818BC0040787F /* Settings.bundle */; };
+		BE765FAAC3F6C8C84451EC73 /* nav-icon-gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52583FD1E5551D7001E9B7C /* nav-icon-gray@3x.png */; };
+		CA97BCBE4E33F4088A3A4502 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3675930C7AAA8D1B50076D97 /* Foundation.framework */; };
 		D09E47561F2C996500AFDCBE /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E47551F2C996500AFDCBE /* Photos.framework */; };
 		D09E47801F2C9D6100AFDCBE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */; };
+		D6BAD7D1E5F0C771D96D710D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */; };
+		E232507A6D366E39997F0B4B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3675930C7AAA8D1B50076D97 /* Foundation.framework */; };
+		E832FBD41DE7DBF457576AA9 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E47551F2C996500AFDCBE /* Photos.framework */; };
+		EAD407FE0E3BE47669AED4D7 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD11887223DB333D00A2EFC9 /* RNBackgroundFetch+AppDelegate.m */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
+		F256CD4CB7B9A1E2686DFEB9 /* libPods-Discourse-Navodians.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33755E6DE8645F037FFE2A5E /* libPods-Discourse-Navodians.a */; };
+		F60BD8A30C9F478486A7D6FF /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
+		FF76E2F9369AA05DFB88F445 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD11887223DB333D00A2EFC9 /* RNBackgroundFetch+AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +98,7 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		0EB720BFE825D4673AAAAD54 /* APEX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APEX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* Discourse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Discourse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Discourse/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Discourse/AppDelegate.m; sourceTree = "<group>"; };
@@ -60,11 +107,21 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Discourse/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Discourse/main.m; sourceTree = "<group>"; };
 		2482A32288AB770A5EC3D04B /* Pods-Discourse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse.release.xcconfig"; path = "Target Support Files/Pods-Discourse/Pods-Discourse.release.xcconfig"; sourceTree = "<group>"; };
+		2D77949FB4A57DCE310705F8 /* Pods-Discourse-Navodians.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-Navodians.release.xcconfig"; path = "Target Support Files/Pods-Discourse-Navodians/Pods-Discourse-Navodians.release.xcconfig"; sourceTree = "<group>"; };
+		33755E6DE8645F037FFE2A5E /* libPods-Discourse-Navodians.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Discourse-Navodians.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		35667425B8D25AC23B513768 /* libPods-Discourse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Discourse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3675930C7AAA8D1B50076D97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		4AAAB69FEE27E90B04BBABB4 /* Pods-Discourse-NITians.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-NITians.release.xcconfig"; path = "Target Support Files/Pods-Discourse-NITians/Pods-Discourse-NITians.release.xcconfig"; sourceTree = "<group>"; };
+		5EADB2B383E935E554CD63AE /* NITians.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NITians.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = Discourse/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		88E3D125B8F1D45A362101DF /* Pods-Discourse-APEX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-APEX.release.xcconfig"; path = "Target Support Files/Pods-Discourse-APEX/Pods-Discourse-APEX.release.xcconfig"; sourceTree = "<group>"; };
 		94936B1821688FB21A88C81D /* Pods-Discourse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse.debug.xcconfig"; path = "Target Support Files/Pods-Discourse/Pods-Discourse.debug.xcconfig"; sourceTree = "<group>"; };
+		98B6AB6E3066AF20E251C054 /* libPods-Discourse-APEX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Discourse-APEX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0FB6D15E70D5B151A4FA3CB /* Pods-Discourse-Navodians.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-Navodians.debug.xcconfig"; path = "Target Support Files/Pods-Discourse-Navodians/Pods-Discourse-Navodians.debug.xcconfig"; sourceTree = "<group>"; };
+		B1CDF59676DC7FD89A990A1E /* Pods-Discourse-NITians.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-NITians.debug.xcconfig"; path = "Target Support Files/Pods-Discourse-NITians/Pods-Discourse-NITians.debug.xcconfig"; sourceTree = "<group>"; };
 		B52583FD1E5551D7001E9B7C /* nav-icon-gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav-icon-gray@3x.png"; path = "../img/nav-icon-gray@3x.png"; sourceTree = "<group>"; };
 		B587A4F11E5549B8003AAE26 /* Discourse.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = Discourse.entitlements; path = Discourse/Discourse.entitlements; sourceTree = "<group>"; };
+		B6C38892A0D8CD42C9A2D8C6 /* libPods-Discourse-NITians.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Discourse-NITians.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD11887223DB333D00A2EFC9 /* RNBackgroundFetch+AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "RNBackgroundFetch+AppDelegate.m"; path = "../node_modules/react-native-background-fetch/ios/RNBackgroundFetch/RNBackgroundFetch+AppDelegate.m"; sourceTree = "<group>"; };
 		BD34D9672ADEF17500AC757D /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		BD4A208027B54F6500574A58 /* DiscourseKeyboardShortcuts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscourseKeyboardShortcuts.h; sourceTree = "<group>"; };
@@ -80,9 +137,23 @@
 		D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		F7D3566348862720E1322DA3 /* Navodians.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navodians.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA25AB8E4295695990B48877 /* Pods-Discourse-APEX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-APEX.debug.xcconfig"; path = "Target Support Files/Pods-Discourse-APEX/Pods-Discourse-APEX.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0DE1207A1F0F81B56EC35128 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA97BCBE4E33F4088A3A4502 /* Foundation.framework in Frameworks */,
+				F60BD8A30C9F478486A7D6FF /* JavaScriptCore.framework in Frameworks */,
+				8AC134CBCEBB51A7CF9D282F /* AVFoundation.framework in Frameworks */,
+				070395B7670C2AB56ED3A457 /* Photos.framework in Frameworks */,
+				F256CD4CB7B9A1E2686DFEB9 /* libPods-Discourse-Navodians.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -91,6 +162,19 @@
 				D09E47801F2C9D6100AFDCBE /* AVFoundation.framework in Frameworks */,
 				D09E47561F2C996500AFDCBE /* Photos.framework in Frameworks */,
 				4E232BF82834A5A8A0B7FFD6 /* libPods-Discourse.a in Frameworks */,
+				99EE557089925156628BA335 /* libPods-Discourse.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		578765CD0CDE6CFC87F2B1EE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				89049D5942FCBCEB03510FCF /* Foundation.framework in Frameworks */,
+				3E94DC8E7B2FBF3821C6DB7C /* JavaScriptCore.framework in Frameworks */,
+				3ADB85F3B2E92F1E81DD6D44 /* AVFoundation.framework in Frameworks */,
+				E832FBD41DE7DBF457576AA9 /* Photos.framework in Frameworks */,
+				564AF81D5ABD25A484E24893 /* libPods-Discourse-NITians.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +182,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3F919CFFB5B889ABFA0C1F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E232507A6D366E39997F0B4B /* Foundation.framework in Frameworks */,
+				AFD4C061E766A9BDCA2D3A45 /* JavaScriptCore.framework in Frameworks */,
+				50A7ED930A5672DE2EBC7AF9 /* AVFoundation.framework in Frameworks */,
+				55490FF2F187D6F1F2BABEDB /* Photos.framework in Frameworks */,
+				16C99C7C5CDBBE28CED383E8 /* libPods-Discourse-APEX.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +226,12 @@
 			children = (
 				94936B1821688FB21A88C81D /* Pods-Discourse.debug.xcconfig */,
 				2482A32288AB770A5EC3D04B /* Pods-Discourse.release.xcconfig */,
+				88E3D125B8F1D45A362101DF /* Pods-Discourse-APEX.release.xcconfig */,
+				FA25AB8E4295695990B48877 /* Pods-Discourse-APEX.debug.xcconfig */,
+				4AAAB69FEE27E90B04BBABB4 /* Pods-Discourse-NITians.release.xcconfig */,
+				B1CDF59676DC7FD89A990A1E /* Pods-Discourse-NITians.debug.xcconfig */,
+				2D77949FB4A57DCE310705F8 /* Pods-Discourse-Navodians.release.xcconfig */,
+				B0FB6D15E70D5B151A4FA3CB /* Pods-Discourse-Navodians.debug.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -163,8 +265,19 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* Discourse.app */,
 				BD9F665D23F5B02C001001B3 /* ShareExtension.appex */,
+				F7D3566348862720E1322DA3 /* Navodians.app */,
+				5EADB2B383E935E554CD63AE /* NITians.app */,
+				0EB720BFE825D4673AAAAD54 /* APEX.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B7413C1D7A285E5087B61A14 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3675930C7AAA8D1B50076D97 /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		BD9F665E23F5B02C001001B3 /* ShareExtension */ = {
@@ -186,6 +299,10 @@
 				D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */,
 				D09E47551F2C996500AFDCBE /* Photos.framework */,
 				35667425B8D25AC23B513768 /* libPods-Discourse.a */,
+				B7413C1D7A285E5087B61A14 /* iOS */,
+				98B6AB6E3066AF20E251C054 /* libPods-Discourse-APEX.a */,
+				B6C38892A0D8CD42C9A2D8C6 /* libPods-Discourse-NITians.a */,
+				33755E6DE8645F037FFE2A5E /* libPods-Discourse-Navodians.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,6 +348,27 @@
 			productReference = 13B07F961A680F5B00A75B9A /* Discourse.app */;
 			productType = "com.apple.product-type.application";
 		};
+		69CEBA73E7FD2071A7589BE8 /* APEX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C1957B9D6A8A7D8CF29FBEBB /* Build configuration list for PBXNativeTarget "APEX" */;
+			buildPhases = (
+				66F2B2C1C9B8CB29EDA6B940 /* [CP] Check Pods Manifest.lock */,
+				6C1837DA221E337BD0386DCE /* Sources */,
+				D3F919CFFB5B889ABFA0C1F1 /* Frameworks */,
+				150E0ECE4D9B0F9D31ED18EC /* Resources */,
+				30813A56B328091CBBC73777 /* Bundle React Native code and images */,
+				217CB19ECD8068787DEC43C3 /* [CP] Embed Pods Frameworks */,
+				AA46483FC0FAEE64875EDFF5 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = APEX;
+			productName = APEX;
+			productReference = 0EB720BFE825D4673AAAAD54 /* APEX.app */;
+			productType = "com.apple.product-type.application";
+		};
 		BD9F665C23F5B02C001001B3 /* ShareExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BD9F666B23F5B02C001001B3 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
@@ -247,6 +385,48 @@
 			productName = ShareExtension;
 			productReference = BD9F665D23F5B02C001001B3 /* ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
+		};
+		C4231B26995B20109EBD8A3D /* Navodians */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FC32A6486334D4EA1F12B05C /* Build configuration list for PBXNativeTarget "Navodians" */;
+			buildPhases = (
+				444D3FCC63C19C751EB65871 /* [CP] Check Pods Manifest.lock */,
+				0BD5CEBE285D498929C36A6F /* Sources */,
+				0DE1207A1F0F81B56EC35128 /* Frameworks */,
+				9C77ED0FEE16C45E9094DC98 /* Resources */,
+				836AAA23667387F8C5827DCB /* Bundle React Native code and images */,
+				35132FBE6D9EE1593BF72AEC /* [CP] Embed Pods Frameworks */,
+				B575905FE21AFC913420DE30 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Navodians;
+			productName = Navodians;
+			productReference = F7D3566348862720E1322DA3 /* Navodians.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F1FEE62CB2BC48F17FDDA8C2 /* NITians */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 386C6C01D8FE2E441006EE4D /* Build configuration list for PBXNativeTarget "NITians" */;
+			buildPhases = (
+				19250DC5AFC65E5788B8DEF0 /* [CP] Check Pods Manifest.lock */,
+				ACDBC25403946D86C9AAEF3F /* Sources */,
+				578765CD0CDE6CFC87F2B1EE /* Frameworks */,
+				9BBBAB287E7F92AE214EC47A /* Resources */,
+				6CEAC2EA1F09D51275FE7D5E /* Bundle React Native code and images */,
+				EE2A5A726F13F71A493C9AAC /* [CP] Embed Pods Frameworks */,
+				6CA088E3C3B37DD341CB7983 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NITians;
+			productName = NITians;
+			productReference = 5EADB2B383E935E554CD63AE /* NITians.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -285,6 +465,9 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* Discourse */,
 				BD9F665C23F5B02C001001B3 /* ShareExtension */,
+				C4231B26995B20109EBD8A3D /* Navodians */,
+				F1FEE62CB2BC48F17FDDA8C2 /* NITians */,
+				69CEBA73E7FD2071A7589BE8 /* APEX */,
 			);
 		};
 /* End PBXProject section */
@@ -299,6 +482,42 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				BDEA363522D818BC0040787F /* Settings.bundle in Resources */,
 				2D21EBACC6C4F9E264463A9D /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		150E0ECE4D9B0F9D31ED18EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9FB92179AF5A5D0588E6B07 /* Images.xcassets in Resources */,
+				BE765FAAC3F6C8C84451EC73 /* nav-icon-gray@3x.png in Resources */,
+				743F3A349C8BBC13EBFD69BE /* LaunchScreen.xib in Resources */,
+				6B413E48579E3DE35A9F27AB /* Settings.bundle in Resources */,
+				D6BAD7D1E5F0C771D96D710D /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9BBBAB287E7F92AE214EC47A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CF2E701DEC506258700E238 /* Images.xcassets in Resources */,
+				5EAC673CBFCFDCE1CC49A33C /* nav-icon-gray@3x.png in Resources */,
+				A5779345BB01572B6963688F /* LaunchScreen.xib in Resources */,
+				103ED9A83303B84514B92A75 /* Settings.bundle in Resources */,
+				9E27DA53E11591E992D61027 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C77ED0FEE16C45E9094DC98 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8370892B1BC6FBB390EBF9D0 /* Images.xcassets in Resources */,
+				630F915E109515B0E519344D /* nav-icon-gray@3x.png in Resources */,
+				BA799D35CAA6E9243420B91E /* LaunchScreen.xib in Resources */,
+				A267EF984920AF69185541FF /* Settings.bundle in Resources */,
+				6F3453258824763BEFEFB262 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +546,184 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		19250DC5AFC65E5788B8DEF0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Discourse-NITians-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		217CB19ECD8068787DEC43C3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Discourse-APEX/Pods-Discourse-APEX-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse-APEX/Pods-Discourse-APEX-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		30813A56B328091CBBC73777 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		35132FBE6D9EE1593BF72AEC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Discourse-Navodians/Pods-Discourse-Navodians-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse-Navodians/Pods-Discourse-Navodians-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		444D3FCC63C19C751EB65871 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Discourse-Navodians-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		66F2B2C1C9B8CB29EDA6B940 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Discourse-APEX-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6CA088E3C3B37DD341CB7983 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Discourse-NITians/Pods-Discourse-NITians-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNBackgroundFetch/TSBackgroundFetchPrivacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNDeviceInfo/RNDeviceInfoPrivacyInfo.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Solid.ttf",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCT-Folly_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TSBackgroundFetchPrivacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNDeviceInfoPrivacyInfo.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse-NITians/Pods-Discourse-NITians-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6CEAC2EA1F09D51275FE7D5E /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
 		76F0B67DB1686AF6FA39E8E4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -343,6 +740,104 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse/Pods-Discourse-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		836AAA23667387F8C5827DCB /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+		};
+		AA46483FC0FAEE64875EDFF5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Discourse-APEX/Pods-Discourse-APEX-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNBackgroundFetch/TSBackgroundFetchPrivacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNDeviceInfo/RNDeviceInfoPrivacyInfo.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Solid.ttf",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCT-Folly_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TSBackgroundFetchPrivacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNDeviceInfoPrivacyInfo.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse-APEX/Pods-Discourse-APEX-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B575905FE21AFC913420DE30 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Discourse-Navodians/Pods-Discourse-Navodians-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNBackgroundFetch/TSBackgroundFetchPrivacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNDeviceInfo/RNDeviceInfoPrivacyInfo.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Solid.ttf",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCT-Folly_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TSBackgroundFetchPrivacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNDeviceInfoPrivacyInfo.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse-Navodians/Pods-Discourse-Navodians-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BFE12B46C2D9D6A07EC74E45 /* [CP] Check Pods Manifest.lock */ = {
@@ -407,9 +902,39 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse/Pods-Discourse-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EE2A5A726F13F71A493C9AAC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Discourse-NITians/Pods-Discourse-NITians-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Discourse-NITians/Pods-Discourse-NITians-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0BD5CEBE285D498929C36A6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABDADAB3FD02F90A26DBA06D /* DiscourseKeyboardShortcuts.m in Sources */,
+				967A9B86915FCE3AADB1B416 /* AppDelegate.m in Sources */,
+				4AF3AD7177A1816C0C23C47F /* main.m in Sources */,
+				A440E8A60D272BF348B8EE11 /* Dummy.swift in Sources */,
+				FF76E2F9369AA05DFB88F445 /* RNBackgroundFetch+AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -419,6 +944,30 @@
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				BDC4F76D248B4F9C00785AF9 /* Dummy.swift in Sources */,
 				BD11887323DB333E00A2EFC9 /* RNBackgroundFetch+AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6C1837DA221E337BD0386DCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				831FB33E81233961AF1DCA62 /* DiscourseKeyboardShortcuts.m in Sources */,
+				1DB0E9831F5581EE32CCBAA6 /* AppDelegate.m in Sources */,
+				BA8A6A81E4691C5BD784ADDD /* main.m in Sources */,
+				86926817125C49686F7C05F8 /* Dummy.swift in Sources */,
+				986D5CE2F572671041E3CBC3 /* RNBackgroundFetch+AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ACDBC25403946D86C9AAEF3F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				281E240BE3B73B2419FAE352 /* DiscourseKeyboardShortcuts.m in Sources */,
+				8059B5F4ED0B73C3F811D447 /* AppDelegate.m in Sources */,
+				0CA9CCDAEEDC567F97332542 /* main.m in Sources */,
+				519E533E36CA52000183DD27 /* Dummy.swift in Sources */,
+				EAD407FE0E3BE47669AED4D7 /* RNBackgroundFetch+AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +1010,56 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		00388E73E61334D1BDC72D36 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B0FB6D15E70D5B151A4FA3CB /* Pods-Discourse-Navodians.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconNavodians;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 695;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 6T3LU73T8S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				ENABLE_BITCODE = NO;
+				ENVFILE = ../.env.navodians;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = navodians/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
+					"$(inherited)",
+					"\"$(SRCROOT)/Discourse\"/**",
+				);
+				MARKETING_VERSION = 2.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.navodians.app;
+				PRODUCT_NAME = Navodians;
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.discourse.DiscourseApp";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc org.discourse.DiscourseApp 1776778144";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 94936B1821688FB21A88C81D /* Pods-Discourse.debug.xcconfig */;
@@ -547,6 +1146,204 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		1C7562E227E9C1C8DFC72A77 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4AAAB69FEE27E90B04BBABB4 /* Pods-Discourse-NITians.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconNITians;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 695;
+				DEVELOPMENT_TEAM = 6T3LU73T8S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				ENABLE_BITCODE = NO;
+				ENVFILE = ../.env.nitians;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = nitians/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
+					"$(inherited)",
+					"\"$(SRCROOT)/Discourse\"/**",
+				);
+				MARKETING_VERSION = 2.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = in.nitians.app;
+				PRODUCT_NAME = NITians;
+				PROVISIONING_PROFILE = "8a5dde79-abbd-4707-a921-2b4412ef65ad";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.discourse.DiscourseApp";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.discourse.DiscourseApp 1776778136";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		23BCA04C73AFCFF121A3B4AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B1CDF59676DC7FD89A990A1E /* Pods-Discourse-NITians.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconNITians;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 695;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 6T3LU73T8S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				ENABLE_BITCODE = NO;
+				ENVFILE = ../.env.nitians;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = nitians/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
+					"$(inherited)",
+					"\"$(SRCROOT)/Discourse\"/**",
+				);
+				MARKETING_VERSION = 2.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = in.nitians.app;
+				PRODUCT_NAME = NITians;
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.discourse.DiscourseApp";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc org.discourse.DiscourseApp 1776778144";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		425828CCBC7B1EAACAD0C77D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA25AB8E4295695990B48877 /* Pods-Discourse-APEX.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconAPEX;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 695;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 6T3LU73T8S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				ENABLE_BITCODE = NO;
+				ENVFILE = ../.env.iitians;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = iitians/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
+					"$(inherited)",
+					"\"$(SRCROOT)/Discourse\"/**",
+				);
+				MARKETING_VERSION = 2.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = in.iitians.app;
+				PRODUCT_NAME = APEX;
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.discourse.DiscourseApp";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc org.discourse.DiscourseApp 1776778144";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		7FD19378A719DBDE177A8A52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D77949FB4A57DCE310705F8 /* Pods-Discourse-Navodians.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconNavodians;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 695;
+				DEVELOPMENT_TEAM = 6T3LU73T8S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				ENABLE_BITCODE = NO;
+				ENVFILE = ../.env.navodians;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = navodians/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
+					"$(inherited)",
+					"\"$(SRCROOT)/Discourse\"/**",
+				);
+				MARKETING_VERSION = 2.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.navodians.app;
+				PRODUCT_NAME = Navodians;
+				PROVISIONING_PROFILE = "8a5dde79-abbd-4707-a921-2b4412ef65ad";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.discourse.DiscourseApp";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.discourse.DiscourseApp 1776778136";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -745,6 +1542,55 @@
 			};
 			name = Release;
 		};
+		F82E8E4AB63A2AD646A5BFDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88E3D125B8F1D45A362101DF /* Pods-Discourse-APEX.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconAPEX;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 695;
+				DEVELOPMENT_TEAM = 6T3LU73T8S;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				ENABLE_BITCODE = NO;
+				ENVFILE = ../.env.iitians;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = iitians/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
+					"$(inherited)",
+					"\"$(SRCROOT)/Discourse\"/**",
+				);
+				MARKETING_VERSION = 2.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = in.iitians.app;
+				PRODUCT_NAME = APEX;
+				PROVISIONING_PROFILE = "8a5dde79-abbd-4707-a921-2b4412ef65ad";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.discourse.DiscourseApp";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.discourse.DiscourseApp 1776778136";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -753,6 +1599,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		386C6C01D8FE2E441006EE4D /* Build configuration list for PBXNativeTarget "NITians" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C7562E227E9C1C8DFC72A77 /* Release */,
+				23BCA04C73AFCFF121A3B4AB /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -771,6 +1626,24 @@
 			buildConfigurations = (
 				BD9F666923F5B02C001001B3 /* Debug */,
 				BD9F666A23F5B02C001001B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C1957B9D6A8A7D8CF29FBEBB /* Build configuration list for PBXNativeTarget "APEX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F82E8E4AB63A2AD646A5BFDE /* Release */,
+				425828CCBC7B1EAACAD0C77D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FC32A6486334D4EA1F12B05C /* Build configuration list for PBXNativeTarget "Navodians" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7FD19378A719DBDE177A8A52 /* Release */,
+				00388E73E61334D1BDC72D36 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

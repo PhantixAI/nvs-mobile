@@ -24,6 +24,19 @@ target 'Discourse' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # Branded app targets share the same pods as Discourse
+  target 'Navodians' do
+    inherit! :complete
+  end
+
+  target 'NITians' do
+    inherit! :complete
+  end
+
+  target 'APEX' do
+    inherit! :complete
+  end
+
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
@@ -33,14 +46,32 @@ target 'Discourse' do
       # :ccache_enabled => true
     )
 
-    # fix the "No template named 'unary_function'" error
-    # see https://stackoverflow.com/questions/77133361/no-template-named-unary-function-in-namespace-std-did-you-mean-unary-fun
-    # should be fixed in RN 0.72.5+
-    # installer.pods_project.targets.each do |target|
-    #   target.build_configurations.each do |config|
-    #     config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)', '_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION']
-    #   end
-    # end
+    # RN 0.80's bundled fmt uses consteval, which requires C++20.
+    # Let react-native's own build settings drive the C++ standard (gnu++20).
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings.delete('CLANG_CXX_LANGUAGE_STANDARD')
+      end
+    end
+
+    # Xcode 26's Apple Clang is stricter about consteval than fmt 11.x expects.
+    # Patch fmt's base header to force FMT_USE_CONSTEVAL=0 before fmt checks it,
+    # so all consteval calls fall back to constexpr (safe on all compilers).
+    # Xcode 26's Apple Clang is stricter about consteval than fmt 11.x expects.
+    # The Apple clang guard in fmt only covers < 14; extend it to all Apple clang.
+    fmt_base_header = File.join(installer.sandbox.root, 'fmt/include/fmt/base.h')
+    if File.exist?(fmt_base_header)
+      content = File.read(fmt_base_header)
+      FileUtils.chmod('u+w', fmt_base_header)
+      patched = content.gsub(
+        /defined\(__apple_build_version__\) && __apple_build_version__ < 14000029L\n#\s*define FMT_USE_CONSTEVAL 0\s*\/\/ consteval is broken in Apple clang < 14\./,
+        "defined(__apple_build_version__)\n#  define FMT_USE_CONSTEVAL 0  // consteval has evaluation issues with Apple clang."
+      )
+      if patched != content
+        File.write(fmt_base_header, patched)
+        puts 'Patched fmt/base.h: disabled consteval for all Apple clang (Xcode 26 workaround)'
+      end
+    end
   end
 
   # https://stackoverflow.com/questions/78993520/invalid-executable-the-executable-appname-app-frameworks-hermes-framework-herm

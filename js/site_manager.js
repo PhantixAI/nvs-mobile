@@ -12,6 +12,7 @@ import DeviceInfo from 'react-native-device-info';
 import JSEncrypt from './../lib/jsencrypt';
 import randomBytes from './../lib/random-bytes';
 import i18n from 'i18n-js';
+import AppConfig from './AppConfig';
 
 const { DiscourseKeyboardShortcuts } = NativeModules;
 const REFRESH_THROTTLE_MS = 5000;
@@ -21,9 +22,9 @@ class SiteManager {
   _subscribers = [];
   sites = [];
   activeSite = null;
-  customScheme = 'discourse';
-  urlScheme = 'discourse://auth_redirect';
-  deviceName = 'Discourse - Unknown Mobile Device';
+  customScheme = AppConfig.urlScheme;
+  urlScheme = `${AppConfig.urlScheme}://auth_redirect`;
+  deviceName = `${AppConfig.devicePrefix} - Unknown Mobile Device`;
   hotTopicsHidden = false;
   siteURLsHidden = false;
 
@@ -37,7 +38,7 @@ class SiteManager {
     });
 
     DeviceInfo.getDeviceName().then(name => {
-      this.deviceName = `Discourse - ${name}`;
+      this.deviceName = `${AppConfig.devicePrefix} - ${name}`;
     });
   }
 
@@ -185,7 +186,21 @@ class SiteManager {
           this.sites = JSON.parse(json).map(obj => {
             return new Site(obj);
           });
+        }
 
+        if (AppConfig.siteURL && this.sites.length === 0) {
+          const lockedSite = new Site({ url: AppConfig.siteURL });
+          this.sites.push(lockedSite);
+          this.save();
+          lockedSite.ensureLatestApi().then(s => {
+            if (s.title) { lockedSite.title = s.title; }
+            if (s.icon)  { lockedSite.icon  = s.icon;  }
+            this.save();
+            this._onChange();
+          }).catch(() => {});
+        }
+
+        if (json) {
           let promises = [];
 
           this.sites.forEach((site, index) => {
@@ -440,7 +455,7 @@ class SiteManager {
           let basePushUrl = 'https://api.discourse.org';
           //let basePushUrl = "http://l.discourse:3000"
 
-          let scopes = 'notifications,session_info,one_time_password';
+          let scopes = 'notifications,session_info,one_time_password,read';
 
           let params = {
             scopes: scopes,

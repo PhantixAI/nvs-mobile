@@ -6,6 +6,17 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 cd "$(dirname "$0")/android"
 
+echo "Cleaning previous app build output..."
+# NOTE: deliberately NOT using `./gradlew clean` here — on this project's New
+# Architecture setup, `clean` wipes each native module's Codegen-generated JNI
+# source dirs, but Gradle's own externalNativeBuildClean<Flavor><Variant> tasks
+# then try to reconfigure CMake (via Android-autolinking.cmake), which references
+# those same now-deleted directories and fails before cleaning can finish.
+# Removing app/build directly purges the same stale generated resValues/JS
+# bundles/packaged resources that caused cross-flavor contamination, without
+# touching node_modules' native module build/.cxx caches or triggering CMake.
+rm -rf app/build
+
 echo "Building release AABs for all 3 apps..."
 # Each flavor must run in its own Gradle invocation — react-native-config's
 # dotenv.gradle picks the active .env file once per invocation from the first

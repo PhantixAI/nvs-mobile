@@ -1018,7 +1018,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = navodians/Navodians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -1158,12 +1158,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = nitians/NITians.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 695;
-				DEVELOPMENT_TEAM = 6T3LU73T8S;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				DEVELOPMENT_TEAM = X8JMJWZ8FH;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
 				ENVFILE = ../.env.nitians;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1187,9 +1187,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = in.nitians.app;
 				PRODUCT_NAME = NITians;
-				PROVISIONING_PROFILE = "8a5dde79-abbd-4707-a921-2b4412ef65ad";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.discourse.DiscourseApp";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.discourse.DiscourseApp 1776778136";
+				PROVISIONING_PROFILE = "81223fc2-ddf1-437c-bb38-0497d1905862";
+				PROVISIONING_PROFILE_SPECIFIER = "NITians India";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "NITians India";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1207,7 +1207,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = nitians/NITians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -1257,7 +1257,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = iitians/APEX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -1307,12 +1307,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = navodians/Navodians.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 695;
-				DEVELOPMENT_TEAM = 6T3LU73T8S;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				DEVELOPMENT_TEAM = X8JMJWZ8FH;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
 				ENVFILE = ../.env.navodians;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1336,9 +1336,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.navodians.app;
 				PRODUCT_NAME = Navodians;
-				PROVISIONING_PROFILE = "8a5dde79-abbd-4707-a921-2b4412ef65ad";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.discourse.DiscourseApp";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.discourse.DiscourseApp 1776778136";
+				PROVISIONING_PROFILE = "75153e10-6065-4596-8971-51750a4bc3d3";
+				PROVISIONING_PROFILE_SPECIFIER = "Navodians India";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Navodians India";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -1550,12 +1550,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = iitians/APEX.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 695;
-				DEVELOPMENT_TEAM = 6T3LU73T8S;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				DEVELOPMENT_TEAM = X8JMJWZ8FH;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
 				ENVFILE = ../.env.iitians;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1579,9 +1579,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = in.iitians.app;
 				PRODUCT_NAME = APEX;
-				PROVISIONING_PROFILE = "8a5dde79-abbd-4707-a921-2b4412ef65ad";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.discourse.DiscourseApp";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.discourse.DiscourseApp 1776778136";
+				PROVISIONING_PROFILE = "99d3badf-675f-4937-8ea4-307011de5fec";
+				PROVISIONING_PROFILE_SPECIFIER = "APEX India";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "APEX India";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

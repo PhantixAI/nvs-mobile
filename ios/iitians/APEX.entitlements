@@ -6,7 +6,6 @@
 	<string>production</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:iitians.in</string>
 		<string>activitycontinuation:iitians.in</string>
 		<string>webcredentials:iitians.in</string>
 	</array>

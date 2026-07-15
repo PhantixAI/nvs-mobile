@@ -1,0 +1,15 @@
+diff --git a/node_modules/react-native-safari-web-auth/ios/SafariWebAuth.swift b/node_modules/react-native-safari-web-auth/ios/SafariWebAuth.swift
+index 3cda040..3209b6b 100644
+--- a/node_modules/react-native-safari-web-auth/ios/SafariWebAuth.swift
++++ b/node_modules/react-native-safari-web-auth/ios/SafariWebAuth.swift
+@@ -11,7 +11,9 @@ class SafariWebAuth: RCTEventEmitter, ASWebAuthenticationPresentationContextProv
+   }
+ 
+   func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+-    return ASPresentationAnchor()
++    return UIApplication.shared.connectedScenes
++      .compactMap { ($0 as? UIWindowScene)?.keyWindow }
++      .first ?? ASPresentationAnchor()
+   }
+ 
+   @objc(requestAuth:callbackURLScheme:ephemeral:resolver:rejecter:)

@@ -544,7 +544,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "source ../node_modules/react-native/scripts/xcode/with-environment.sh\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		19250DC5AFC65E5788B8DEF0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -602,7 +602,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "source ../node_modules/react-native/scripts/xcode/with-environment.sh\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		35132FBE6D9EE1593BF72AEC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -722,7 +722,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "source ../node_modules/react-native/scripts/xcode/with-environment.sh\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		76F0B67DB1686AF6FA39E8E4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -758,7 +758,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
+			shellScript = "source ../node_modules/react-native/scripts/xcode/with-environment.sh\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		AA46483FC0FAEE64875EDFF5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1020,12 +1020,11 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = navodians/Navodians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 695;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 6T3LU73T8S;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				DEVELOPMENT_TEAM = X8JMJWZ8FH;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
 				ENVFILE = ../.env.navodians;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1049,8 +1048,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.navodians.app;
 				PRODUCT_NAME = Navodians;
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.discourse.DiscourseApp";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc org.discourse.DiscourseApp 1776778144";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1209,12 +1206,11 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = nitians/NITians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 695;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 6T3LU73T8S;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				DEVELOPMENT_TEAM = X8JMJWZ8FH;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
 				ENVFILE = ../.env.nitians;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1238,8 +1234,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = in.nitians.app;
 				PRODUCT_NAME = NITians;
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.discourse.DiscourseApp";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc org.discourse.DiscourseApp 1776778144";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1259,12 +1253,11 @@
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_ENTITLEMENTS = iitians/APEX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 695;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 6T3LU73T8S;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
+				DEVELOPMENT_TEAM = X8JMJWZ8FH;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
 				ENVFILE = ../.env.iitians;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1288,8 +1281,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = in.iitians.app;
 				PRODUCT_NAME = APEX;
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.discourse.DiscourseApp";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc org.discourse.DiscourseApp 1776778144";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Discourse-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

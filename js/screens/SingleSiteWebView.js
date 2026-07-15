@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   BackHandler,
   Image,
-  Platform,
+  Linking,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -28,7 +28,6 @@ const SingleSiteWebView = ({ screenProps }) => {
   const [webUrl, setWebUrl] = useState(null);
   const [needsLogin, setNeedsLogin] = useState(false);
   const [otpPending, setOtpPending] = useState(false);
-  const [authWebViewUrl, setAuthWebViewUrl] = useState(null);
 
   const webviewRef = useRef(null);
   const canGoBackRef = useRef(false);
@@ -38,12 +37,8 @@ const SingleSiteWebView = ({ screenProps }) => {
   //       to avoid stale closure bugs when sites load asynchronously.
   useEffect(() => {
     const onChange = () => {
-      const newToken = siteManager?.sites?.[0]?.authToken ?? null;
       setLoadingSites(siteManager.isLoading());
-      setAuthToken(newToken);
-      // Close the Android auth WebView overlay as soon as the token arrives,
-      // regardless of whether it came via onShouldStartLoadWithRequest or Linking.
-      if (newToken) { setAuthWebViewUrl(null); }
+      setAuthToken(siteManager?.sites?.[0]?.authToken ?? null);
     };
     siteManager.subscribe(onChange);
     return () => siteManager.unsubscribe(onChange);
@@ -61,6 +56,17 @@ const SingleSiteWebView = ({ screenProps }) => {
     }
 
     setNeedsLogin(false);
+
+    // Prefer an OTP Discourse already embedded in the auth_redirect payload
+    // (see Discourse.js's setPendingOtp) — a follow-up POST to
+    // /user-api-key/otp can be rejected (403) depending on how the key was
+    // granted. Only fetch our own when none was supplied (e.g. password login).
+    const pendingOtp = siteManager.takePendingOtp?.();
+    if (pendingOtp) {
+      setOtpPending(true);
+      setWebUrl(`${site.url}/session/otp/${pendingOtp}`);
+      return;
+    }
 
     // OTP flow for both iOS and Android.
     // generateURLParams returns auth_redirect=appscheme://... which Discourse redirects to after
@@ -108,13 +114,13 @@ const SingleSiteWebView = ({ screenProps }) => {
     siteManager.setActiveSite(site);
     try {
       const authUrl = await siteManager.generateAuthURL(site);
-      if (Platform.OS === 'ios') {
-        // ASWebAuthenticationSession — handleAuthPayload fires inside → _onChange → setAuthToken → useEffect builds URL
-        await siteManager.requestAuth(authUrl);
-      } else {
-        // Android: in-app WebView modal — no Chrome Custom Tabs, nothing to close manually
-        setAuthWebViewUrl(authUrl);
-      }
+      // Open in the real system browser rather than an embedded WebView/
+      // ASWebAuthenticationSession — those isolate cookies during the OAuth
+      // round-trip through Apple/Google, which drops the CSRF state cookie
+      // and breaks Sign in with Apple/Google. The root-level Linking listener
+      // in Discourse.js catches the app's return via auth_redirect and calls
+      // handleAuthPayload, which flows into the onChange subscription above.
+      await Linking.openURL(authUrl);
     } catch (_) {}
   }, []);
 
@@ -127,44 +133,6 @@ const SingleSiteWebView = ({ screenProps }) => {
       </SafeAreaView>
     );
   }
-
-  // ── Auth WebView overlay (Android) — shown on top of whatever is beneath ──────
-
-  const authWebViewOverlay = Platform.OS === 'android' && authWebViewUrl ? (
-    <View style={[StyleSheet.absoluteFill, styles.authWebViewOverlay, { backgroundColor: theme.background }]}>
-      <SafeAreaView edges={['top']}>
-        <View style={[styles.authWebViewHeader, { borderBottomColor: theme.grayBorder }]}>
-          <TouchableOpacity
-            onPress={() => setAuthWebViewUrl(null)}
-            style={styles.authWebViewSide}
-          >
-            <Text style={{ color: theme.blueCallToAction, fontSize: 16 }}>Cancel</Text>
-          </TouchableOpacity>
-          <Text style={[styles.authWebViewTitle, { color: theme.grayTitle }]}>Log In</Text>
-          <View style={styles.authWebViewSide} />
-        </View>
-      </SafeAreaView>
-      <WebView
-        source={{ uri: authWebViewUrl }}
-        originWhitelist={['https://*', 'http://*', `${AppConfig.urlScheme}://*`]}
-        startInLoadingState={true}
-        renderLoading={() => (
-          <ActivityIndicator style={StyleSheet.absoluteFill} size="large" color={theme.grayUI} />
-        )}
-        onShouldStartLoadWithRequest={request => {
-          if (request.url.startsWith(AppConfig.urlScheme + '://')) {
-            const urlParams = siteManager.parseURLparameters(request.url);
-            if (urlParams.payload) {
-              siteManager.handleAuthPayload(urlParams.payload);
-            }
-            setAuthWebViewUrl(null);
-            return false;
-          }
-          return true;
-        }}
-      />
-    </View>
-  ) : null;
 
   // ── Auth gate ──────────────────────────────────────────────────────────────
 
@@ -185,11 +153,10 @@ const SingleSiteWebView = ({ screenProps }) => {
               style={[styles.loginBtn, { backgroundColor: theme.blueCallToAction }]}
               onPress={handleLogin}
             >
-              <Text style={styles.loginBtnText}>Log In</Text>
+              <Text style={styles.loginBtnText}>Continue</Text>
             </TouchableOpacity>
           </View>
         </SafeAreaView>
-        {authWebViewOverlay}
       </View>
     );
   }
@@ -241,6 +208,12 @@ const SingleSiteWebView = ({ screenProps }) => {
               setOtpPending(false);
             }
           }
+          // Detect the web session getting logged out (e.g. via Discourse's own
+          // in-page menu) and clear the app's stored token so the auth gate
+          // shows again, instead of leaving the site's logged-out page visible.
+          if (!navState.loading && navState.url.startsWith(`${site.url}/login`)) {
+            siteManager.logOut(site);
+          }
         }}
         onShouldStartLoadWithRequest={request => {
           if (request.url.startsWith(site.url)) { return true; }
@@ -248,7 +221,6 @@ const SingleSiteWebView = ({ screenProps }) => {
           return false;
         }}
       />
-      {authWebViewOverlay}
     </SafeAreaView>
   );
 };
@@ -276,23 +248,6 @@ const styles = StyleSheet.create({
   },
   loginBtnText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  authWebViewOverlay: {
-    zIndex: 10,
-  },
-  authWebViewHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  authWebViewSide: { width: 70 },
-  authWebViewTitle: {
-    flex: 1,
-    textAlign: 'center',
     fontSize: 16,
     fontWeight: '600',
   },

@@ -6,7 +6,6 @@
 	<string>production</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>activitycontinuation:nitians.in</string>
 		<string>webcredentials:nitians.in</string>
 	</array>
 </dict>

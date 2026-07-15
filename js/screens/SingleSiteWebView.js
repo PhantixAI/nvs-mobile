@@ -197,6 +197,19 @@ const SingleSiteWebView = ({ screenProps }) => {
             color={theme.grayUI}
           />
         )}
+        // Auto-submits Discourse's OTP "Finish Login" confirmation form (a plain
+        // HTML form at /session/otp/:token — see app/views/session/one_time_password.html.erb)
+        // so the user lands straight in the logged-in forum instead of needing an extra tap.
+        // Guarded by pathname so it's a no-op on every other page this WebView loads.
+        injectedJavaScript={`
+          (function() {
+            if (window.location.pathname.startsWith('/session/otp/')) {
+              var form = document.querySelector('form');
+              if (form) { form.submit(); }
+            }
+            true;
+          })();
+        `}
         onNavigationStateChange={navState => {
           canGoBackRef.current = navState.canGoBack;
           // Detect when OTP redirect has completed (landed on home) — applies to both platforms

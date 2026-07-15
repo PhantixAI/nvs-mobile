@@ -79,7 +79,7 @@ const ChatScreen = ({ screenProps }) => {
               });
             }}
           >
-            <Text style={styles.loginBtnText}>Log In</Text>
+            <Text style={styles.loginBtnText}>Continue</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

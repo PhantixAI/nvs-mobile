@@ -146,6 +146,34 @@ class SiteManager {
     AsyncStorage.setItem('@Discourse.sites', JSON.stringify(this.sites));
   }
 
+  // Clears the app's stored auth token for a site, independent of the site's
+  // own web session — used when the web session gets logged out (e.g. via
+  // Discourse's own in-page menu) so the app falls back to its auth gate
+  // instead of showing the site's logged-out page inside the WebView.
+  logOut(site) {
+    site.authToken = null;
+    site.hasPush = null;
+    site.apiVersion = null;
+    this.save();
+    this._onChange();
+  }
+
+  // Discourse sometimes embeds a ready-to-use one-time-password directly in
+  // the auth_redirect payload (scope `one_time_password`), rather than
+  // requiring a follow-up POST to /user-api-key/otp — that follow-up call can
+  // be rejected (403) depending on how the key was granted. setPendingOtp /
+  // takePendingOtp let the deep-link handler hand that value to the screen
+  // that builds the authenticated WebView URL, consumed exactly once.
+  setPendingOtp(otp) {
+    this._pendingOtp = otp;
+  }
+
+  takePendingOtp() {
+    const otp = this._pendingOtp;
+    this._pendingOtp = null;
+    return otp;
+  }
+
   ensureRSAKeys() {
     return new Promise(resolve => {
       if (this.rsaKeys) {

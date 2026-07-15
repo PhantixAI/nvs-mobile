@@ -1021,7 +1021,7 @@
 				CODE_SIGN_ENTITLEMENTS = navodians/Navodians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
@@ -1067,7 +1067,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 6T3LU73T8S;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
@@ -1112,7 +1112,7 @@
 				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEVELOPMENT_TEAM = 6T3LU73T8S;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
 				ENABLE_BITCODE = NO;
@@ -1158,7 +1158,7 @@
 				CODE_SIGN_ENTITLEMENTS = nitians/NITians.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
@@ -1207,7 +1207,7 @@
 				CODE_SIGN_ENTITLEMENTS = nitians/NITians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
@@ -1254,7 +1254,7 @@
 				CODE_SIGN_ENTITLEMENTS = iitians/APEX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
@@ -1301,7 +1301,7 @@
 				CODE_SIGN_ENTITLEMENTS = navodians/Navodians.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
@@ -1544,7 +1544,7 @@
 				CODE_SIGN_ENTITLEMENTS = iitians/APEX.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 695;
+				CURRENT_PROJECT_VERSION = 696;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;

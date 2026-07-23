@@ -7,6 +7,7 @@ import {
   BackHandler,
   Image,
   Linking,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -114,13 +115,16 @@ const SingleSiteWebView = ({ screenProps }) => {
     siteManager.setActiveSite(site);
     try {
       const authUrl = await siteManager.generateAuthURL(site);
-      // Open in the real system browser rather than an embedded WebView/
-      // ASWebAuthenticationSession — those isolate cookies during the OAuth
-      // round-trip through Apple/Google, which drops the CSRF state cookie
-      // and breaks Sign in with Apple/Google. The root-level Linking listener
-      // in Discourse.js catches the app's return via auth_redirect and calls
-      // handleAuthPayload, which flows into the onChange subscription above.
-      await Linking.openURL(authUrl);
+      if (Platform.OS === 'ios') {
+        // ASWebAuthenticationSession presents sign-in as an in-app sheet rather
+        // than switching to the system Safari app (Apple Guideline 4), while
+        // still sharing the system cookie store so Sign in with Apple/Google
+        // keep working. It resolves internally via handleAuthPayload, which
+        // the authToken/OTP effects above already react to.
+        await siteManager.requestAuth(authUrl);
+      } else {
+        await Linking.openURL(authUrl);
+      }
     } catch (_) {}
   }, []);
 

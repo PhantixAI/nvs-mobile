@@ -38,7 +38,7 @@
     "invariant": "^2.2",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
-    "react": "19.1.0",
+    "react": "19.1.4",
     "react-native": "^0.81.6",
     "react-native-background-fetch": "^4.2.3",
     "react-native-config": "^1.6.1",

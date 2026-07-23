@@ -6230,7 +6230,7 @@ __metadata:
     patch-package: "npm:^8.0.1"
     prettier: "npm:2.8.8"
     prop-types: "npm:^15.8.1"
-    react: "npm:19.1.0"
+    react: "npm:19.1.4"
     react-native: "npm:^0.81.6"
     react-native-background-fetch: "npm:^4.2.3"
     react-native-config: "npm:^1.6.1"
@@ -12303,10 +12303,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:19.1.0":
-  version: 19.1.0
-  resolution: "react@npm:19.1.0"
-  checksum: 10/d0180689826fd9de87e839c365f6f361c561daea397d61d724687cae88f432a307d1c0f53a0ee95ddbe3352c10dac41d7ff1ad85530fb24951b27a39e5398db4
+"react@npm:19.1.4":
+  version: 19.1.4
+  resolution: "react@npm:19.1.4"
+  checksum: 10/db697ac47534653ad712ba556517d4c7b5a664d5c03d3f88d80b5e39f742cd552cdcfbfd6dc2498586e830315232ba9f93c8f2522bb91264bdbc9766bd7a1a73
   languageName: node
   linkType: hard
 

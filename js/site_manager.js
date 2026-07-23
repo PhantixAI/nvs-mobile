@@ -532,17 +532,23 @@ class SiteManager {
 
       if (authRequest) {
         const urlParams = this.parseURLparameters(authRequest);
+        let OTP;
+
+        if (urlParams.oneTimePassword) {
+          OTP = this.decryptHelper(urlParams.oneTimePassword);
+          // Stage it before handleAuthPayload triggers _onChange, so callers
+          // that react to the authToken update (e.g. SingleSiteWebView) can
+          // consume it via takePendingOtp() instead of the follow-up POST to
+          // /user-api-key/otp, which can be rejected (403) depending on how
+          // the key was granted.
+          this.setPendingOtp(OTP);
+        }
 
         if (urlParams.payload) {
           this.handleAuthPayload(urlParams.payload);
         }
 
-        if (urlParams.oneTimePassword) {
-          const OTP = this.decryptHelper(urlParams.oneTimePassword);
-          return `${this.activeSite.url}/session/otp/${OTP}`;
-        } else {
-          return this.activeSite.url;
-        }
+        return OTP ? `${this.activeSite.url}/session/otp/${OTP}` : this.activeSite.url;
       }
     } catch (e) {
       console.log('auth process cancelled: ', e);

@@ -216,16 +216,26 @@ class SiteManager {
           });
         }
 
-        if (AppConfig.siteURL && this.sites.length === 0) {
-          const lockedSite = new Site({ url: AppConfig.siteURL });
-          this.sites.push(lockedSite);
-          this.save();
-          lockedSite.ensureLatestApi().then(s => {
-            if (s.title) { lockedSite.title = s.title; }
-            if (s.icon)  { lockedSite.icon  = s.icon;  }
+        if (AppConfig.siteURL) {
+          // White-label builds are locked to a single site. If persisted storage
+          // holds a different site (e.g. a previous build baked in the wrong
+          // flavor's config), AppConfig.siteURL is still the source of truth —
+          // discard the stale entry rather than getting stuck on it forever.
+          if (this.sites.length > 0 && !this.sites.some(s => s.url === AppConfig.siteURL)) {
+            this.sites = [];
+          }
+
+          if (this.sites.length === 0) {
+            const lockedSite = new Site({ url: AppConfig.siteURL });
+            this.sites.push(lockedSite);
             this.save();
-            this._onChange();
-          }).catch(() => {});
+            lockedSite.ensureLatestApi().then(s => {
+              if (s.title) { lockedSite.title = s.title; }
+              if (s.icon)  { lockedSite.icon  = s.icon;  }
+              this.save();
+              this._onChange();
+            }).catch(() => {});
+          }
         }
 
         if (json) {
@@ -456,6 +466,11 @@ class SiteManager {
     this._nonceSite.authToken = decrypted.key;
     this._nonceSite.hasPush = decrypted.push;
     this._nonceSite.apiVersion = decrypted.api;
+
+    // Persist the token immediately — otherwise it only reaches disk via the
+    // throttled background refresh, which can lose the race if the app is
+    // closed shortly after login.
+    this.save();
 
     // cause we want to stop rendering connect
     this._onChange();

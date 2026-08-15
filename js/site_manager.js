@@ -174,6 +174,21 @@ class SiteManager {
     return otp;
   }
 
+  // Single-site mode's WebView is the entire app (see SingleSiteWebView.js) —
+  // there's no separate browser screen to navigate to for a tapped push
+  // notification, so hand the target URL to the already-mounted WebView via
+  // this pending-value + _onChange notify, same pattern as pendingOtp above.
+  openDeepLink(url) {
+    this._pendingDeepLink = url;
+    this._onChange();
+  }
+
+  takePendingDeepLink() {
+    const url = this._pendingDeepLink;
+    this._pendingDeepLink = null;
+    return url;
+  }
+
   ensureRSAKeys() {
     return new Promise(resolve => {
       if (this.rsaKeys) {
@@ -495,16 +510,13 @@ class SiteManager {
           return this.generateNonce(site);
         })
         .then(nonce => {
-          let basePushUrl = 'https://api.discourse.org';
-          //let basePushUrl = "http://l.discourse:3000"
-
           let scopes = 'notifications,session_info,one_time_password,read';
 
           let params = {
             scopes: scopes,
             client_id: clientId,
             nonce: nonce,
-            push_url: basePushUrl + '/api/publish_' + Platform.OS,
+            platform: Platform.OS,
             auth_redirect: this.urlScheme,
             application_name: this.deviceName,
             public_key: this.rsaKeys.public,

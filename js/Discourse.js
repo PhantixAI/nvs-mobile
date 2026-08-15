@@ -163,22 +163,24 @@ class Discourse extends React.Component {
         ToastAndroid.show(message, ToastAndroid.LONG);
       });
 
-      // notification clicked while app is in background/closed
+      // notification clicked while app is backgrounded (not killed)
       firebaseMessaging.onNotificationOpenedApp(async remoteMessage => {
         console.log('onNotificationOpenedApp');
-        let url = null;
-
-        if (remoteMessage.data.payload) {
-          // new v1 FCM API
-          const payload = JSON.parse(remoteMessage.data.payload);
-          url = payload.discourse_url;
-        } else {
-          // legacy FCM API
-          url = remoteMessage.data.discourse_url;
-        }
+        const url = this._extractDiscourseUrl(remoteMessage);
 
         if (url) {
-          this.openUrl(url);
+          this._deliverNotificationUrl(url);
+        }
+      });
+
+      // app launched from a killed state by tapping a notification
+      firebaseMessaging.getInitialNotification().then(remoteMessage => {
+        if (remoteMessage) {
+          const url = this._extractDiscourseUrl(remoteMessage);
+
+          if (url) {
+            this._deliverNotificationUrl(url);
+          }
         }
       });
     }
@@ -222,6 +224,29 @@ class Discourse extends React.Component {
 
     if (url) {
       this._siteManager.setActiveSite(url);
+      this._deliverNotificationUrl(url);
+    }
+  }
+
+  _extractDiscourseUrl(remoteMessage) {
+    if (remoteMessage.data.payload) {
+      // new v1 FCM API
+      const payload = JSON.parse(remoteMessage.data.payload);
+      return payload.discourse_url;
+    }
+
+    // legacy FCM API
+    return remoteMessage.data.discourse_url;
+  }
+
+  // Single-site (white-label) builds are one full-screen WebView with no
+  // separate browser chrome — hand the URL to the already-mounted WebView
+  // via siteManager instead of pushing the multi-site "WebView" screen
+  // (which has its own URL bar/share button, wrong for this app shape).
+  _deliverNotificationUrl(url) {
+    if (AppConfig.siteURL) {
+      this._siteManager.openDeepLink(url);
+    } else {
       this.openUrl(url);
     }
   }

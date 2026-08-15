@@ -1,9 +1,16 @@
 /* @flow */
 'use strict';
 
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   ActivityIndicator,
+  AppState,
   BackHandler,
   Image,
   Linking,
@@ -14,6 +21,7 @@ import {
   View,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { CustomTabs } from 'react-native-custom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemeContext } from '../ThemeContext';
 import AppConfig from '../AppConfig';
@@ -24,14 +32,43 @@ const SingleSiteWebView = ({ screenProps }) => {
   const siteManager = screenProps.siteManager;
 
   // Track authToken and loading state so login/logout/load events trigger re-renders
-  const [loadingSites, setLoadingSites] = useState(() => siteManager.isLoading());
-  const [authToken, setAuthToken] = useState(() => siteManager?.sites?.[0]?.authToken ?? null);
+  const [loadingSites, setLoadingSites] = useState(() =>
+    siteManager.isLoading(),
+  );
+  const [authToken, setAuthToken] = useState(
+    () => siteManager?.sites?.[0]?.authToken ?? null,
+  );
   const [webUrl, setWebUrl] = useState(null);
   const [needsLogin, setNeedsLogin] = useState(false);
   const [otpPending, setOtpPending] = useState(false);
+  const [webViewError, setWebViewError] = useState(null);
+  // A deep link (from a tapped push notification) waiting to be applied
+  // once the WebView reaches a stable, authenticated, non-OTP state — see
+  // the dedicated effect below for why this can't just be applied on
+  // arrival.
+  const [pendingDeepLink, setPendingDeepLink] = useState(null);
 
   const webviewRef = useRef(null);
   const canGoBackRef = useRef(false);
+
+  // The WebView's underlying connection can go stale after the app sits
+  // backgrounded for a while (OS reclaims the content process / network
+  // session); the next load then fails with e.g. NSURLErrorTimedOut and,
+  // without a retry, leaves the raw native error page on screen
+  // indefinitely. Auto-retry once when the app comes back to the
+  // foreground after such a failure. Clearing webViewError alone is enough
+  // to recover — it swaps the error view back out for <WebView>, which
+  // mounts fresh (webviewRef is null while the error view is showing,
+  // since the WebView itself is unmounted, so there's nothing to call
+  // .reload() on here).
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active' && webViewError) {
+        setWebViewError(null);
+      }
+    });
+    return () => sub.remove();
+  }, [webViewError]);
 
   // Subscribe to siteManager so login / logout / load events update state
   // NOTE: site is always read fresh from siteManager inside effects/callbacks
@@ -40,10 +77,38 @@ const SingleSiteWebView = ({ screenProps }) => {
     const onChange = () => {
       setLoadingSites(siteManager.isLoading());
       setAuthToken(siteManager?.sites?.[0]?.authToken ?? null);
+
+      const deepLink = siteManager.takePendingDeepLink?.();
+      if (deepLink) {
+        setPendingDeepLink(deepLink);
+      }
     };
     siteManager.subscribe(onChange);
     return () => siteManager.unsubscribe(onChange);
   }, []);
+
+  // Apply a pending deep link once (and only once) the WebView has reached a
+  // stable, authenticated, fully-logged-in state. Re-evaluated on every
+  // relevant change instead of applied immediately on arrival, because a
+  // notification tapped from a killed app races the app's own startup: the
+  // persisted session (siteManager.load() via AsyncStorage) and the OTP
+  // auto-login redirect both complete asynchronously and can finish before
+  // or after the deep link arrives. Applying too early — e.g. while
+  // otpPending, before the OTP redirect has actually established the
+  // session cookie — would strand the WebView on the deep link URL without
+  // ever completing login.
+  useEffect(() => {
+    if (
+      pendingDeepLink &&
+      !loadingSites &&
+      !needsLogin &&
+      webUrl &&
+      !otpPending
+    ) {
+      setWebUrl(pendingDeepLink);
+      setPendingDeepLink(null);
+    }
+  }, [pendingDeepLink, loadingSites, needsLogin, webUrl, otpPending]);
 
   // Build the authenticated WebView URL whenever authToken or site URL changes
   useEffect(() => {
@@ -109,9 +174,18 @@ const SingleSiteWebView = ({ screenProps }) => {
     return () => sub.remove();
   }, []);
 
+  // Clearing webViewError swaps the error view back out for a freshly
+  // mounted <WebView> (see the AppState effect above for why an explicit
+  // .reload() call isn't needed/possible here).
+  const handleRetry = useCallback(() => {
+    setWebViewError(null);
+  }, []);
+
   const handleLogin = useCallback(async () => {
     const site = siteManager?.sites?.[0];
-    if (!site) { return; }
+    if (!site) {
+      return;
+    }
     siteManager.setActiveSite(site);
     try {
       const authUrl = await siteManager.generateAuthURL(site);
@@ -123,7 +197,21 @@ const SingleSiteWebView = ({ screenProps }) => {
         // the authToken/OTP effects above already react to.
         await siteManager.requestAuth(authUrl);
       } else {
-        await Linking.openURL(authUrl);
+        // Chrome Custom Tabs presents sign-in as an overlay instead of fully
+        // switching to the default browser app, while still using Chrome's
+        // real cookie jar/login state — same Sign in with Google/Apple
+        // benefit as ASWebAuthenticationSession above. Completion is still
+        // signaled the same way as before: Discourse's auth_redirect lands
+        // on the app's custom URL scheme, caught by _handleOpenUrl in
+        // Discourse.js, regardless of which browser surface launched it.
+        try {
+          await CustomTabs.openURL(authUrl, {
+            enableUrlBarHiding: true,
+            showPageTitle: false,
+          });
+        } catch (_) {
+          await Linking.openURL(authUrl);
+        }
       }
     } catch (_) {}
   }, []);
@@ -132,8 +220,14 @@ const SingleSiteWebView = ({ screenProps }) => {
 
   if (loadingSites) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-        <ActivityIndicator style={{ flex: 1 }} size="large" color={theme.grayUI} />
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: theme.background }]}
+      >
+        <ActivityIndicator
+          style={{ flex: 1 }}
+          size="large"
+          color={theme.grayUI}
+        />
       </SafeAreaView>
     );
   }
@@ -154,7 +248,10 @@ const SingleSiteWebView = ({ screenProps }) => {
               {AppConfig.loginMessage}
             </Text>
             <TouchableOpacity
-              style={[styles.loginBtn, { backgroundColor: theme.blueCallToAction }]}
+              style={[
+                styles.loginBtn,
+                { backgroundColor: theme.blueCallToAction },
+              ]}
               onPress={handleLogin}
             >
               <Text style={styles.loginBtnText}>Continue</Text>
@@ -169,9 +266,40 @@ const SingleSiteWebView = ({ screenProps }) => {
 
   if (!webUrl) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-        <ActivityIndicator style={{ flex: 1 }} size="large" color={theme.grayUI} />
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: theme.background }]}
+      >
+        <ActivityIndicator
+          style={{ flex: 1 }}
+          size="large"
+          color={theme.grayUI}
+        />
       </SafeAreaView>
+    );
+  }
+
+  // ── WebView failed to load ──────────────────────────────────────────────────
+
+  if (webViewError) {
+    return (
+      <View style={[styles.container, { backgroundColor: theme.background }]}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={styles.authGate}>
+            <Text style={[styles.authTitle, { color: theme.grayTitle }]}>
+              {webViewError.description || 'Unable to load the page.'}
+            </Text>
+            <TouchableOpacity
+              style={[
+                styles.loginBtn,
+                { backgroundColor: theme.blueCallToAction },
+              ]}
+              onPress={handleRetry}
+            >
+              <Text style={styles.loginBtnText}>Retry</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </View>
     );
   }
 
@@ -228,14 +356,24 @@ const SingleSiteWebView = ({ screenProps }) => {
           // Detect the web session getting logged out (e.g. via Discourse's own
           // in-page menu) and clear the app's stored token so the auth gate
           // shows again, instead of leaving the site's logged-out page visible.
-          if (!navState.loading && navState.url.startsWith(`${site.url}/login`)) {
+          if (
+            !navState.loading &&
+            navState.url.startsWith(`${site.url}/login`)
+          ) {
             siteManager.logOut(site);
           }
         }}
         onShouldStartLoadWithRequest={request => {
-          if (request.url.startsWith(site.url)) { return true; }
-          if (request.url.startsWith('about:')) { return true; }
+          if (request.url.startsWith(site.url)) {
+            return true;
+          }
+          if (request.url.startsWith('about:')) {
+            return true;
+          }
           return false;
+        }}
+        onError={syntheticEvent => {
+          setWebViewError(syntheticEvent.nativeEvent);
         }}
       />
     </SafeAreaView>

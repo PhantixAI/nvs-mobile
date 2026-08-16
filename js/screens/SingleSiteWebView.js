@@ -50,6 +50,9 @@ const SingleSiteWebView = ({ screenProps }) => {
 
   const webviewRef = useRef(null);
   const canGoBackRef = useRef(false);
+  // Guards the imperative OTP-form-submit fallback (see onNavigationStateChange
+  // below) so it only fires once per OTP session, reset whenever a fresh one starts.
+  const otpSubmittedRef = useRef(false);
 
   // The WebView's underlying connection can go stale after the app sits
   // backgrounded for a while (OS reclaims the content process / network
@@ -129,6 +132,7 @@ const SingleSiteWebView = ({ screenProps }) => {
     // granted. Only fetch our own when none was supplied (e.g. password login).
     const pendingOtp = siteManager.takePendingOtp?.();
     if (pendingOtp) {
+      otpSubmittedRef.current = false;
       setOtpPending(true);
       setWebUrl(`${site.url}/session/otp/${pendingOtp}`);
       return;
@@ -148,6 +152,7 @@ const SingleSiteWebView = ({ screenProps }) => {
       try {
         const json = JSON.parse(xhr.responseText);
         if (json.key) {
+          otpSubmittedRef.current = false;
           setOtpPending(true);
           setWebUrl(`${site.url}/session/otp/${json.key}`);
         } else {
@@ -351,6 +356,26 @@ const SingleSiteWebView = ({ screenProps }) => {
               !navState.url.includes('/session/otp/')
             ) {
               setOtpPending(false);
+            } else if (
+              Platform.OS === 'ios' &&
+              navState.url.includes('/session/otp/') &&
+              !otpSubmittedRef.current
+            ) {
+              // Reliable fallback for iOS only: the declarative
+              // injectedJavaScript prop below can fire before the OTP form
+              // is in the DOM (a WKWebView-only timing quirk). Android's
+              // injectedJavaScript already auto-submits reliably on its
+              // own — running this there too double-submits the one-time
+              // password, and the second submit fails since it's already
+              // been consumed.
+              otpSubmittedRef.current = true;
+              webviewRef.current?.injectJavaScript(`
+                (function() {
+                  var form = document.querySelector('form');
+                  if (form) { form.submit(); }
+                  true;
+                })();
+              `);
             }
           }
           // Detect the web session getting logged out (e.g. via Discourse's own

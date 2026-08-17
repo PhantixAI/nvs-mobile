@@ -92,7 +92,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 250
+        versionCode 700
         versionName MYAPP_VERSION
         resValue "string", "build_config_package", "com.discourse"
     }

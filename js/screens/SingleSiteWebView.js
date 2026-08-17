@@ -23,9 +23,11 @@ import {
 import { WebView } from 'react-native-webview';
 import { CustomTabs } from 'react-native-custom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import DeviceInfo from 'react-native-device-info';
 import { ThemeContext } from '../ThemeContext';
 import AppConfig from '../AppConfig';
 import appLogo from '../appLogo';
+import isBelowRequiredVersion from '../lib/compare_versions';
 
 const SingleSiteWebView = ({ screenProps }) => {
   const theme = useContext(ThemeContext);
@@ -42,17 +44,28 @@ const SingleSiteWebView = ({ screenProps }) => {
   const [needsLogin, setNeedsLogin] = useState(false);
   const [otpPending, setOtpPending] = useState(false);
   const [webViewError, setWebViewError] = useState(null);
+  // True from the moment Continue is tapped until the returned auth token
+  // is actually processed — see handleLogin and the fallback effect below
+  // for why this can't just track the in-flight promise directly.
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   // A deep link (from a tapped push notification) waiting to be applied
   // once the WebView reaches a stable, authenticated, non-OTP state — see
   // the dedicated effect below for why this can't just be applied on
   // arrival.
   const [pendingDeepLink, setPendingDeepLink] = useState(null);
+  const [latestAppVersion, setLatestAppVersion] = useState(
+    () => siteManager?.sites?.[0]?.latestAppVersion ?? null,
+  );
+  const [updateBannerDismissed, setUpdateBannerDismissed] = useState(false);
 
   const webviewRef = useRef(null);
   const canGoBackRef = useRef(false);
   // Guards the imperative OTP-form-submit fallback (see onNavigationStateChange
   // below) so it only fires once per OTP session, reset whenever a fresh one starts.
   const otpSubmittedRef = useRef(false);
+  // Holds the grace-period timeout scheduled by the isAuthenticating
+  // fallback effect below, so it can be cleared/replaced correctly.
+  const authFallbackTimeoutRef = useRef(null);
 
   // The WebView's underlying connection can go stale after the app sits
   // backgrounded for a while (OS reclaims the content process / network
@@ -80,6 +93,14 @@ const SingleSiteWebView = ({ screenProps }) => {
     const onChange = () => {
       setLoadingSites(siteManager.isLoading());
       setAuthToken(siteManager?.sites?.[0]?.authToken ?? null);
+
+      const newVersion = siteManager?.sites?.[0]?.latestAppVersion ?? null;
+      setLatestAppVersion(prev => {
+        if (newVersion && newVersion !== prev) {
+          setUpdateBannerDismissed(false);
+        }
+        return newVersion;
+      });
 
       const deepLink = siteManager.takePendingDeepLink?.();
       if (deepLink) {
@@ -112,6 +133,65 @@ const SingleSiteWebView = ({ screenProps }) => {
       setPendingDeepLink(null);
     }
   }, [pendingDeepLink, loadingSites, needsLogin, webUrl, otpPending]);
+
+  // Clears a stuck "authenticating" spinner if the user backs out of the
+  // external auth flow without completing it, instead of leaving the
+  // Continue button permanently replaced. Needed because neither platform's
+  // success path is a reliable place to reset isAuthenticating: on iOS,
+  // SiteManager.requestAuth swallows cancellation and never rejects; on
+  // Android, CustomTabs.openURL resolves as soon as the tab opens, well
+  // before auth actually completes or is cancelled. Instead, wait for the
+  // app to return to the foreground and give the legitimate success path
+  // (which lands via siteManager's onChange, independent of this effect) a
+  // grace window to complete before falling back to re-showing the button.
+  useEffect(() => {
+    if (!isAuthenticating) {
+      return;
+    }
+
+    const sub = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        clearTimeout(authFallbackTimeoutRef.current);
+        authFallbackTimeoutRef.current = setTimeout(() => {
+          setIsAuthenticating(false);
+        }, 8000);
+      }
+    });
+
+    return () => {
+      sub.remove();
+      clearTimeout(authFallbackTimeoutRef.current);
+    };
+  }, [isAuthenticating]);
+
+  // Long-polls for a real-time mobile_stable_version update (see
+  // SiteManager.startVersionCheck) whenever the app is logged in and
+  // foregrounded — paused in the background to match how Discourse.js's own
+  // 30s totals refresh timer already pauses there, since a held-open
+  // long-poll connection has no value while the app isn't visible.
+  useEffect(() => {
+    const site = siteManager?.sites?.[0];
+    if (!authToken || !site) {
+      return;
+    }
+
+    if (AppState.currentState === 'active') {
+      siteManager.startVersionCheck(site);
+    }
+
+    const sub = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active') {
+        siteManager.startVersionCheck(site);
+      } else {
+        siteManager.stopVersionCheck();
+      }
+    });
+
+    return () => {
+      sub.remove();
+      siteManager.stopVersionCheck();
+    };
+  }, [authToken]);
 
   // Build the authenticated WebView URL whenever authToken or site URL changes
   useEffect(() => {
@@ -186,12 +266,42 @@ const SingleSiteWebView = ({ screenProps }) => {
     setWebViewError(null);
   }, []);
 
+  const handleUpdatePress = useCallback(async () => {
+    const bundleId = DeviceInfo.getBundleId();
+
+    if (Platform.OS === 'android') {
+      try {
+        await Linking.openURL(`market://details?id=${bundleId}`);
+      } catch (_) {
+        Linking.openURL(
+          `https://play.google.com/store/apps/details?id=${bundleId}`,
+        );
+      }
+      return;
+    }
+
+    // No numeric App Store ID is stored anywhere in this repo — look it up
+    // on demand via Apple's public iTunes lookup API instead of hardcoding
+    // one per flavor.
+    try {
+      const res = await fetch(
+        `https://itunes.apple.com/lookup?bundleId=${bundleId}`,
+      );
+      const json = await res.json();
+      const storeUrl = json?.results?.[0]?.trackViewUrl;
+      if (storeUrl) {
+        Linking.openURL(storeUrl);
+      }
+    } catch (_) {}
+  }, []);
+
   const handleLogin = useCallback(async () => {
     const site = siteManager?.sites?.[0];
     if (!site) {
       return;
     }
     siteManager.setActiveSite(site);
+    setIsAuthenticating(true);
     try {
       const authUrl = await siteManager.generateAuthURL(site);
       if (Platform.OS === 'ios') {
@@ -252,15 +362,21 @@ const SingleSiteWebView = ({ screenProps }) => {
             <Text style={[styles.authTitle, { color: theme.grayTitle }]}>
               {AppConfig.loginMessage}
             </Text>
-            <TouchableOpacity
-              style={[
-                styles.loginBtn,
-                { backgroundColor: theme.blueCallToAction },
-              ]}
-              onPress={handleLogin}
-            >
-              <Text style={styles.loginBtnText}>Continue</Text>
-            </TouchableOpacity>
+            {isAuthenticating ? (
+              <View style={styles.loginBtn}>
+                <ActivityIndicator size="small" color={theme.blueCallToAction} />
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={[
+                  styles.loginBtn,
+                  { backgroundColor: theme.blueCallToAction },
+                ]}
+                onPress={handleLogin}
+              >
+                <Text style={styles.loginBtnText}>Continue</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </SafeAreaView>
       </View>
@@ -311,12 +427,33 @@ const SingleSiteWebView = ({ screenProps }) => {
   // ── Full-screen Discourse WebView ──────────────────────────────────────────
 
   const site = siteManager?.sites?.[0];
+  const updateAvailable =
+    !updateBannerDismissed &&
+    isBelowRequiredVersion(latestAppVersion, DeviceInfo.getVersion());
 
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
       edges={['top', 'left', 'right']}
     >
+      {updateAvailable && (
+        <View
+          style={[
+            styles.updateBanner,
+            { backgroundColor: theme.blueCallToAction },
+          ]}
+        >
+          <Text style={styles.updateBannerText}>
+            A new version is available.
+          </Text>
+          <TouchableOpacity onPress={handleUpdatePress}>
+            <Text style={styles.updateBannerAction}>Update</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setUpdateBannerDismissed(true)}>
+            <Text style={styles.updateBannerAction}>Dismiss</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <WebView
         ref={webviewRef}
         source={{ uri: webUrl }}
@@ -338,11 +475,19 @@ const SingleSiteWebView = ({ screenProps }) => {
         // HTML form at /session/otp/:token — see app/views/session/one_time_password.html.erb)
         // so the user lands straight in the logged-in forum instead of needing an extra tap.
         // Guarded by pathname so it's a no-op on every other page this WebView loads.
+        // Prefers window.__otpAutoSubmit (the server page's own guarded submit
+        // path, which prevents a double-POST of the one-time token if this
+        // races a manual fallback tap) — falling back to a raw form.submit()
+        // only against an older cached page that predates that guard.
         injectedJavaScript={`
           (function() {
             if (window.location.pathname.startsWith('/session/otp/')) {
-              var form = document.querySelector('form');
-              if (form) { form.submit(); }
+              if (window.__otpAutoSubmit) {
+                window.__otpAutoSubmit();
+              } else {
+                var form = document.querySelector('form');
+                if (form) { form.submit(); }
+              }
             }
             true;
           })();
@@ -371,8 +516,12 @@ const SingleSiteWebView = ({ screenProps }) => {
               otpSubmittedRef.current = true;
               webviewRef.current?.injectJavaScript(`
                 (function() {
-                  var form = document.querySelector('form');
-                  if (form) { form.submit(); }
+                  if (window.__otpAutoSubmit) {
+                    window.__otpAutoSubmit();
+                  } else {
+                    var form = document.querySelector('form');
+                    if (form) { form.submit(); }
+                  }
                   true;
                 })();
               `);
@@ -430,6 +579,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+  },
+  updateBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  updateBannerText: {
+    flex: 1,
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  updateBannerAction: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '700',
+    marginLeft: 16,
   },
 });
 

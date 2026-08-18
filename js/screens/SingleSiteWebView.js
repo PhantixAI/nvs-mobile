@@ -23,11 +23,9 @@ import {
 import { WebView } from 'react-native-webview';
 import { CustomTabs } from 'react-native-custom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import DeviceInfo from 'react-native-device-info';
 import { ThemeContext } from '../ThemeContext';
 import AppConfig from '../AppConfig';
 import appLogo from '../appLogo';
-import isBelowRequiredVersion from '../lib/compare_versions';
 
 const SingleSiteWebView = ({ screenProps }) => {
   const theme = useContext(ThemeContext);
@@ -53,10 +51,6 @@ const SingleSiteWebView = ({ screenProps }) => {
   // the dedicated effect below for why this can't just be applied on
   // arrival.
   const [pendingDeepLink, setPendingDeepLink] = useState(null);
-  const [latestAppVersion, setLatestAppVersion] = useState(
-    () => siteManager?.sites?.[0]?.latestAppVersion ?? null,
-  );
-  const [updateBannerDismissed, setUpdateBannerDismissed] = useState(false);
 
   const webviewRef = useRef(null);
   const canGoBackRef = useRef(false);
@@ -93,14 +87,6 @@ const SingleSiteWebView = ({ screenProps }) => {
     const onChange = () => {
       setLoadingSites(siteManager.isLoading());
       setAuthToken(siteManager?.sites?.[0]?.authToken ?? null);
-
-      const newVersion = siteManager?.sites?.[0]?.latestAppVersion ?? null;
-      setLatestAppVersion(prev => {
-        if (newVersion && newVersion !== prev) {
-          setUpdateBannerDismissed(false);
-        }
-        return newVersion;
-      });
 
       const deepLink = siteManager.takePendingDeepLink?.();
       if (deepLink) {
@@ -163,35 +149,6 @@ const SingleSiteWebView = ({ screenProps }) => {
       clearTimeout(authFallbackTimeoutRef.current);
     };
   }, [isAuthenticating]);
-
-  // Long-polls for a real-time mobile_stable_version update (see
-  // SiteManager.startVersionCheck) whenever the app is logged in and
-  // foregrounded — paused in the background to match how Discourse.js's own
-  // 30s totals refresh timer already pauses there, since a held-open
-  // long-poll connection has no value while the app isn't visible.
-  useEffect(() => {
-    const site = siteManager?.sites?.[0];
-    if (!authToken || !site) {
-      return;
-    }
-
-    if (AppState.currentState === 'active') {
-      siteManager.startVersionCheck(site);
-    }
-
-    const sub = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState === 'active') {
-        siteManager.startVersionCheck(site);
-      } else {
-        siteManager.stopVersionCheck();
-      }
-    });
-
-    return () => {
-      sub.remove();
-      siteManager.stopVersionCheck();
-    };
-  }, [authToken]);
 
   // Build the authenticated WebView URL whenever authToken or site URL changes
   useEffect(() => {
@@ -264,35 +221,6 @@ const SingleSiteWebView = ({ screenProps }) => {
   // .reload() call isn't needed/possible here).
   const handleRetry = useCallback(() => {
     setWebViewError(null);
-  }, []);
-
-  const handleUpdatePress = useCallback(async () => {
-    const bundleId = DeviceInfo.getBundleId();
-
-    if (Platform.OS === 'android') {
-      try {
-        await Linking.openURL(`market://details?id=${bundleId}`);
-      } catch (_) {
-        Linking.openURL(
-          `https://play.google.com/store/apps/details?id=${bundleId}`,
-        );
-      }
-      return;
-    }
-
-    // No numeric App Store ID is stored anywhere in this repo — look it up
-    // on demand via Apple's public iTunes lookup API instead of hardcoding
-    // one per flavor.
-    try {
-      const res = await fetch(
-        `https://itunes.apple.com/lookup?bundleId=${bundleId}`,
-      );
-      const json = await res.json();
-      const storeUrl = json?.results?.[0]?.trackViewUrl;
-      if (storeUrl) {
-        Linking.openURL(storeUrl);
-      }
-    } catch (_) {}
   }, []);
 
   const handleLogin = useCallback(async () => {
@@ -427,33 +355,12 @@ const SingleSiteWebView = ({ screenProps }) => {
   // ── Full-screen Discourse WebView ──────────────────────────────────────────
 
   const site = siteManager?.sites?.[0];
-  const updateAvailable =
-    !updateBannerDismissed &&
-    isBelowRequiredVersion(latestAppVersion, DeviceInfo.getVersion());
 
   return (
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.background }]}
       edges={['top', 'left', 'right']}
     >
-      {updateAvailable && (
-        <View
-          style={[
-            styles.updateBanner,
-            { backgroundColor: theme.blueCallToAction },
-          ]}
-        >
-          <Text style={styles.updateBannerText}>
-            A new version is available.
-          </Text>
-          <TouchableOpacity onPress={handleUpdatePress}>
-            <Text style={styles.updateBannerAction}>Update</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setUpdateBannerDismissed(true)}>
-            <Text style={styles.updateBannerAction}>Dismiss</Text>
-          </TouchableOpacity>
-        </View>
-      )}
       <WebView
         ref={webviewRef}
         source={{ uri: webUrl }}
@@ -579,24 +486,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-  },
-  updateBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-  },
-  updateBannerText: {
-    flex: 1,
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  updateBannerAction: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '700',
-    marginLeft: 16,
   },
 });
 

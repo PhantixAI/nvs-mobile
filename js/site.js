@@ -24,7 +24,6 @@ class Site {
     'lastChecked',
     'lastVisitedPath',
     'lastVisitedPathAt',
-    'latestAppVersion',
     'loginRequired',
     'queueCount',
     'title',
@@ -279,12 +278,6 @@ class Site {
       this.username = totals.username;
       if (totals.group_inboxes) {
         this.groupInboxes = totals.group_inboxes;
-      }
-      // Fallback delivery path for mobile_stable_version (see SiteManager's
-      // MessageBus poll for the real-time path) — catches a client that
-      // missed the socket event, e.g. a cold start or a dropped poll cycle.
-      if (totals.mobile_stable_version) {
-        this.latestAppVersion = totals.mobile_stable_version;
       }
       if (options.bgTask) {
         return {

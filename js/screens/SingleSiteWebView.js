@@ -23,9 +23,19 @@ import {
 import { WebView } from 'react-native-webview';
 import { CustomTabs } from 'react-native-custom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Sentry from '@sentry/react-native';
 import { ThemeContext } from '../ThemeContext';
 import AppConfig from '../AppConfig';
 import appLogo from '../appLogo';
+
+// A load that never fires onLoadEnd/onError within this window is treated as
+// a hang (e.g. a stalled connection on poor networks) and surfaced the same
+// way as a hard failure, since otherwise the ActivityIndicator spins forever
+// with no visibility into what's wrong.
+const WEBVIEW_LOAD_TIMEOUT_MS = 20000;
+// Above this, a load that did complete is still worth flagging as slow —
+// this is the signal used to quantify degradation on low-bandwidth networks.
+const WEBVIEW_SLOW_LOAD_THRESHOLD_MS = 8000;
 
 const SingleSiteWebView = ({ screenProps }) => {
   const theme = useContext(ThemeContext);
@@ -60,6 +70,17 @@ const SingleSiteWebView = ({ screenProps }) => {
   // Holds the grace-period timeout scheduled by the isAuthenticating
   // fallback effect below, so it can be cleared/replaced correctly.
   const authFallbackTimeoutRef = useRef(null);
+  // Timestamp of the current load's onLoadStart, and the hang-detection
+  // timer armed alongside it — see the WebView's onLoadStart/onLoadEnd below.
+  const loadStartRef = useRef(null);
+  const loadTimeoutRef = useRef(null);
+
+  const clearLoadTimeout = useCallback(() => {
+    if (loadTimeoutRef.current) {
+      clearTimeout(loadTimeoutRef.current);
+      loadTimeoutRef.current = null;
+    }
+  }, []);
 
   // The WebView's underlying connection can go stale after the app sits
   // backgrounded for a while (OS reclaims the content process / network
@@ -74,11 +95,19 @@ const SingleSiteWebView = ({ screenProps }) => {
   useEffect(() => {
     const sub = AppState.addEventListener('change', nextAppState => {
       if (nextAppState === 'active' && webViewError) {
+        clearLoadTimeout();
         setWebViewError(null);
       }
     });
     return () => sub.remove();
-  }, [webViewError]);
+  }, [webViewError, clearLoadTimeout]);
+
+  // A stale hang-detection timer from a previous URL must not fire after a
+  // later successful load — clear it whenever the target URL changes, and on
+  // unmount.
+  useEffect(() => {
+    return () => clearLoadTimeout();
+  }, [webUrl, clearLoadTimeout]);
 
   // Subscribe to siteManager so login / logout / load events update state
   // NOTE: site is always read fresh from siteManager inside effects/callbacks
@@ -453,7 +482,56 @@ const SingleSiteWebView = ({ screenProps }) => {
           }
           return false;
         }}
+        onLoadStart={() => {
+          loadStartRef.current = Date.now();
+          clearLoadTimeout();
+          loadTimeoutRef.current = setTimeout(() => {
+            Sentry.captureMessage('webview_load_timeout', {
+              level: 'error',
+              tags: { app_variant: AppConfig.variant },
+              extra: { url: webUrl, timeoutMs: WEBVIEW_LOAD_TIMEOUT_MS },
+            });
+            setWebViewError({ description: 'Unable to load the page.' });
+          }, WEBVIEW_LOAD_TIMEOUT_MS);
+        }}
+        onLoadEnd={() => {
+          clearLoadTimeout();
+          if (loadStartRef.current) {
+            const durationMs = Date.now() - loadStartRef.current;
+            loadStartRef.current = null;
+            if (durationMs > WEBVIEW_SLOW_LOAD_THRESHOLD_MS) {
+              Sentry.captureMessage('webview_slow_load', {
+                level: 'warning',
+                tags: { app_variant: AppConfig.variant },
+                extra: { durationMs, url: webUrl },
+              });
+            }
+          }
+        }}
+        onHttpError={syntheticEvent => {
+          const { statusCode, url } = syntheticEvent.nativeEvent;
+          Sentry.captureMessage('webview_http_error', {
+            level: 'error',
+            tags: {
+              app_variant: AppConfig.variant,
+              status_code: String(statusCode),
+            },
+            extra: { url },
+          });
+        }}
         onError={syntheticEvent => {
+          clearLoadTimeout();
+          Sentry.captureException(
+            new Error(
+              `webview_load_error: ${syntheticEvent.nativeEvent.description}`,
+            ),
+            {
+              tags: {
+                app_variant: AppConfig.variant,
+                error_code: String(syntheticEvent.nativeEvent.code),
+              },
+            },
+          );
           setWebViewError(syntheticEvent.nativeEvent);
         }}
       />

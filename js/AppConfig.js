@@ -11,4 +11,5 @@ export default {
   primaryColor: Config.APP_PRIMARY_COLOR || '#08c',
   devicePrefix: Config.APP_DEVICE_PREFIX || 'Discourse',
   loginMessage: Config.APP_LOGIN_MESSAGE || 'Welcome! Please log in to continue.',
+  sentryDsn: Config.SENTRY_DSN || null,
 };

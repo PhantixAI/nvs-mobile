@@ -92,7 +92,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 703
+        versionCode 704
         versionName MYAPP_VERSION
         resValue "string", "build_config_package", "com.discourse"
     }

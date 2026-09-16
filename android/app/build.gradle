@@ -92,7 +92,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
-        versionCode 704
+        versionCode 705
         versionName MYAPP_VERSION
         resValue "string", "build_config_package", "com.discourse"
     }
@@ -114,19 +114,19 @@ android {
         navodians {
             dimension "app"
             applicationId "com.navodians.app"
-            manifestPlaceholders = [appUrlScheme: "navodians"]
+            manifestPlaceholders = [appUrlScheme: "navodians", appLinkHost: "navodians.com"]
             resValue "string", "app_name", "Navodians"
         }
         nitians {
             dimension "app"
             applicationId "in.nitians.app"
-            manifestPlaceholders = [appUrlScheme: "nitians"]
+            manifestPlaceholders = [appUrlScheme: "nitians", appLinkHost: "nitians.in"]
             resValue "string", "app_name", "NITians"
         }
         iitians {
             dimension "app"
             applicationId "in.iitians.app"
-            manifestPlaceholders = [appUrlScheme: "iitians"]
+            manifestPlaceholders = [appUrlScheme: "iitians", appLinkHost: "iitians.in"]
             resValue "string", "app_name", "APEX"
         }
     }

@@ -36,6 +36,12 @@ const WEBVIEW_LOAD_TIMEOUT_MS = 20000;
 // Above this, a load that did complete is still worth flagging as slow —
 // this is the signal used to quantify degradation on low-bandwidth networks.
 const WEBVIEW_SLOW_LOAD_THRESHOLD_MS = 8000;
+// Long backgrounds risk the OS reclaiming the WebView's render process
+// without firing onContentProcessDidTerminate/onRenderProcessGone — force
+// a reload on return past this threshold as a safety net. Short app-switches
+// (checking a notification, copying a link) are common and must not trigger
+// this, hence a multi-minute floor rather than reloading on every foreground.
+const BACKGROUND_RELOAD_THRESHOLD_MS = 3 * 60 * 1000;
 
 const SingleSiteWebView = ({ screenProps }) => {
   const theme = useContext(ThemeContext);
@@ -64,6 +70,9 @@ const SingleSiteWebView = ({ screenProps }) => {
 
   const webviewRef = useRef(null);
   const canGoBackRef = useRef(false);
+  // Timestamp of when the app last backgrounded — see the AppState effect
+  // below for the stale-background reload safety net that uses it.
+  const backgroundedAtRef = useRef(null);
   // Guards the imperative OTP-form-submit fallback (see onNavigationStateChange
   // below) so it only fires once per OTP session, reset whenever a fresh one starts.
   const otpSubmittedRef = useRef(false);
@@ -94,9 +103,28 @@ const SingleSiteWebView = ({ screenProps }) => {
   // .reload() on here).
   useEffect(() => {
     const sub = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState === 'active' && webViewError) {
-        clearLoadTimeout();
-        setWebViewError(null);
+      // Tracked on 'background' specifically, not 'inactive' — 'inactive' also
+      // fires for transient events (Control Center, notification center
+      // pulldown) that aren't a real backgrounding and shouldn't arm this.
+      if (nextAppState === 'background') {
+        backgroundedAtRef.current = Date.now();
+        return;
+      }
+      if (nextAppState === 'active') {
+        if (webViewError) {
+          clearLoadTimeout();
+          setWebViewError(null);
+        } else if (
+          backgroundedAtRef.current &&
+          Date.now() - backgroundedAtRef.current > BACKGROUND_RELOAD_THRESHOLD_MS
+        ) {
+          // Safety net for a silent process kill that never fired
+          // onContentProcessDidTerminate/onRenderProcessGone below — the
+          // WebView is still mounted here, so reload it directly rather than
+          // going through the webViewError/remount path.
+          webviewRef.current?.reload();
+        }
+        backgroundedAtRef.current = null;
       }
     });
     return () => sub.remove();
@@ -144,6 +172,12 @@ const SingleSiteWebView = ({ screenProps }) => {
       webUrl &&
       !otpPending
     ) {
+      // A deep link always wins over a stale error screen — otherwise it can
+      // get silently folded into webUrl while the Retry screen from an
+      // earlier, unrelated failed load is still showing, stranding the user
+      // there until they manually retry.
+      clearLoadTimeout();
+      setWebViewError(null);
       setWebUrl(pendingDeepLink);
       setPendingDeepLink(null);
     }
@@ -533,6 +567,20 @@ const SingleSiteWebView = ({ screenProps }) => {
             },
           );
           setWebViewError(syntheticEvent.nativeEvent);
+        }}
+        onContentProcessDidTerminate={() => {
+          Sentry.captureMessage('webview_process_terminated', {
+            level: 'warning',
+            tags: { app_variant: AppConfig.variant, platform: 'ios' },
+          });
+          webviewRef.current?.reload();
+        }}
+        onRenderProcessGone={() => {
+          Sentry.captureMessage('webview_process_terminated', {
+            level: 'warning',
+            tags: { app_variant: AppConfig.variant, platform: 'android' },
+          });
+          webviewRef.current?.reload();
         }}
       />
     </SafeAreaView>

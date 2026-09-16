@@ -48,9 +48,19 @@ target 'Discourse' do
 
     # RN 0.80's bundled fmt uses consteval, which requires C++20.
     # Let react-native's own build settings drive the C++ standard (gnu++20).
+    #
+    # Xcode 27 raised its minimum supported simulator deployment target to
+    # 15.0, but some pods' resource-bundle-only targets (privacy manifests,
+    # asset catalogs) still hardcode older values react_native_post_install
+    # doesn't touch — bump any that fall below the app's own target.
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         config.build_settings.delete('CLANG_CXX_LANGUAGE_STANDARD')
+
+        target_version = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+        if target_version && Gem::Version.new(target_version) < app_ios_deployment_target
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = app_ios_deployment_target.version
+        end
       end
     end
 

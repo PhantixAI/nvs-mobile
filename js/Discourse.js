@@ -337,7 +337,14 @@ class Discourse extends React.Component {
       if (/\/(auth|user-api-key|session)\//.test(event.url)) {
         return;
       }
-      if (this._siteManager.urlInSites(event.url)) {
+      if (AppConfig.siteURL) {
+        // Single-site (white-label) builds have one full-screen WebView with no
+        // separate browser chrome — hand the URL to it directly, same as a
+        // notification-tap deep link (see _deliverNotificationUrl), instead of
+        // pushing the multi-site "WebView" screen or a Custom Tab, both of
+        // which show browser-style chrome that's wrong for this app shape.
+        this._siteManager.openDeepLink(event.url);
+      } else if (this._siteManager.urlInSites(event.url)) {
         this.openUrl(event.url);
       } else {
         this._addSite(event.url);

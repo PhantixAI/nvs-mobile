@@ -61,6 +61,16 @@
               <action android:name="open_topic" />
               <category android:name="android.intent.category.DEFAULT" />
           </intent-filter>
+          <!-- App Links: opens the app directly for https://<appLinkHost>/... URLs
+               (e.g. shared in Messages) instead of falling through to the browser.
+               autoVerify triggers Android's Digital Asset Links check against
+               https://<appLinkHost>/.well-known/assetlinks.json on install. -->
+          <intent-filter android:autoVerify="true">
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <data android:scheme="https" android:host="${appLinkHost}" />
+          </intent-filter>
       </activity>
     </application>
 </manifest>

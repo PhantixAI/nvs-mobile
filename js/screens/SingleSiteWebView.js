@@ -15,11 +15,13 @@ import {
   Image,
   Linking,
   Platform,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { WebView } from 'react-native-webview';
 import { CustomTabs } from 'react-native-custom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,6 +29,13 @@ import * as Sentry from '@sentry/react-native';
 import { ThemeContext } from '../ThemeContext';
 import AppConfig from '../AppConfig';
 import appLogo from '../appLogo';
+import {
+  HEADER_COLOR_SCRIPT,
+  normalizeHexColor,
+  parseHeaderColorMessage,
+  statusBarStyleFor,
+} from '../headerColor';
+import { HIDE_SITE_FOOTER_NAV_SCRIPT } from '../hideSiteFooterNav';
 
 // A load that never fires onLoadEnd/onError within this window is treated as
 // a hang (e.g. a stalled connection on poor networks) and surfaced the same
@@ -67,6 +76,40 @@ const SingleSiteWebView = ({ screenProps }) => {
   // the dedicated effect below for why this can't just be applied on
   // arrival.
   const [pendingDeepLink, setPendingDeepLink] = useState(null);
+  // The site's own header colour, reported by the page (see headerColor.js) and
+  // used for the strip the app draws above the header. null until known, in
+  // which case the app theme's background is used.
+  const [headerColor, setHeaderColor] = useState(null);
+  // Cached per site and light/dark mode so the strip is already the right
+  // colour at launch instead of flashing white until the page reports it.
+  const headerColorKey = `@NVS.headerColor:${siteManager?.sites?.[0]?.url}:${theme.name}`;
+
+  useEffect(() => {
+    let cancelled = false;
+    setHeaderColor(null);
+    AsyncStorage.getItem(headerColorKey)
+      .then(saved => {
+        const color = normalizeHexColor(saved);
+        if (!cancelled && color) {
+          setHeaderColor(color);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [headerColorKey]);
+
+  const handleWebViewMessage = useCallback(
+    event => {
+      const color = parseHeaderColorMessage(event?.nativeEvent?.data);
+      if (color) {
+        setHeaderColor(color);
+        AsyncStorage.setItem(headerColorKey, color).catch(() => {});
+      }
+    },
+    [headerColorKey],
+  );
 
   const webviewRef = useRef(null);
   const canGoBackRef = useRef(false);
@@ -418,21 +461,27 @@ const SingleSiteWebView = ({ screenProps }) => {
   // ── Full-screen Discourse WebView ──────────────────────────────────────────
 
   const site = siteManager?.sites?.[0];
+  const barColor = headerColor || theme.background;
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={[styles.container, { backgroundColor: barColor }]}
       edges={['top', 'left', 'right']}
     >
+      {headerColor && <StatusBar barStyle={statusBarStyleFor(headerColor)} />}
       <WebView
         ref={webviewRef}
         source={{ uri: webUrl }}
+        injectedJavaScriptBeforeContentLoaded={
+          HIDE_SITE_FOOTER_NAV_SCRIPT + HEADER_COLOR_SCRIPT
+        }
+        onMessage={handleWebViewMessage}
         applicationNameForUserAgent="DiscourseHub"
         sharedCookiesEnabled={true}
         thirdPartyCookiesEnabled={true}
         allowsBackForwardNavigationGestures={true}
         allowsInlineMediaPlayback={true}
-        style={{ flex: 1, backgroundColor: theme.background }}
+        style={{ flex: 1, backgroundColor: barColor }}
         startInLoadingState={true}
         renderLoading={() => (
           <ActivityIndicator

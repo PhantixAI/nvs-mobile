@@ -15,6 +15,7 @@ import {
   View,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { CustomTabs } from 'react-native-custom-tabs';
 import ErrorScreen from '../WebViewScreenComponents/ErrorScreen';
 import ProgressBar from '../../ProgressBar';
 import chroma from 'chroma-js';
@@ -276,11 +277,14 @@ class WebViewComponent extends React.Component {
                 return true;
               }
 
-              // on iOS, intercept 3rd party auth requests and handle them using ASWebAuthenticationSession
+              // Intercept 3rd party auth requests and hand them to requestAuth()
+              // below instead of letting the WebView navigate to them directly —
+              // on iOS that's ASWebAuthenticationSession, on Android Chrome Custom
+              // Tabs (see requestAuth() for the platform split).
               const authRequest =
                 request.url.startsWith(`${this.props.url}/session/sso`) ||
                 request.url.startsWith(`${this.props.url}/auth/`);
-              if (Platform.OS === 'ios' && authRequest) {
+              if (authRequest) {
                 if (!this.state.authProcessActive) {
                   this.requestAuth();
                 }
@@ -457,15 +461,40 @@ class WebViewComponent extends React.Component {
     this.setState({ authProcessActive: true });
 
     const url = await this.siteManager.generateAuthURL(site);
-    const authURL = await this.siteManager.requestAuth(url);
 
-    this.setState({ authProcessActive: false });
+    if (Platform.OS === 'ios') {
+      // ASWebAuthenticationSession presents sign-in as an in-app sheet rather
+      // than switching to the system Safari app, while still sharing the
+      // system cookie store so Sign in with Apple/Google keep working.
+      const authURL = await this.siteManager.requestAuth(url);
 
-    if (authURL) {
-      // this may seem odd to navigate to the same screen
-      // but we want to use the same path as notifications and reset the local state
-      // via componentDidUpdate
-      this.props.navigation.navigate('WebView', { url: authURL });
+      this.setState({ authProcessActive: false });
+
+      if (authURL) {
+        // this may seem odd to navigate to the same screen
+        // but we want to use the same path as notifications and reset the local state
+        // via componentDidUpdate
+        this.props.navigation.navigate('WebView', { url: authURL });
+      }
+    } else {
+      // Chrome Custom Tabs presents sign-in as an overlay instead of fully
+      // switching to the default browser app, the same in-app benefit as
+      // ASWebAuthenticationSession above — react-native-safari-web-auth
+      // (used for requestAuth on iOS) has no Android implementation, so
+      // there's no equivalent promise to await here. Completion is signaled
+      // the same way as elsewhere in the app: Discourse's auth_redirect
+      // lands on the app's custom URL scheme, caught by _handleOpenUrl in
+      // Discourse.js, regardless of which browser surface launched it.
+      try {
+        await CustomTabs.openURL(url, {
+          enableUrlBarHiding: true,
+          showPageTitle: false,
+        });
+      } catch (_) {
+        await Linking.openURL(url);
+      }
+
+      this.setState({ authProcessActive: false });
     }
   }
 
@@ -502,8 +531,9 @@ class WebViewComponent extends React.Component {
       this.siteManager.refreshSites();
     }
 
-    if (showLogin && Platform.OS === 'ios') {
-      // show login screen inside ASWebAuthenticationSession
+    if (showLogin) {
+      // show login screen in-app (ASWebAuthenticationSession on iOS, Chrome
+      // Custom Tabs on Android — see requestAuth())
       this.requestAuth();
     }
   }

@@ -7,7 +7,8 @@ trap 'rm -f /tmp/envfile' EXIT
 
 SCHEME="APEX"
 BUNDLE_ID="in.iitians.app"
-SIMULATOR_NAME="iPad Air 11-inch"
+# SIMULATOR_NAME="iPad Air 11-inch"
+SIMULATOR_NAME="iPhone 17 Pro"
 
 # `react-native run-ios` unconditionally tries to open Simulator.app before
 # building, but that app doesn't exist in this machine's Xcode install —

@@ -18,6 +18,7 @@
 		1DB0E9831F5581EE32CCBAA6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		281E240BE3B73B2419FAE352 /* DiscourseKeyboardShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4A208127B54FA300574A58 /* DiscourseKeyboardShortcuts.m */; };
 		2D21EBACC6C4F9E264463A9D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */; };
+		2F0DFD29B143EEE35904E47A /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD3620E2D200EF213F08101 /* SceneDelegate.m */; };
 		3ADB85F3B2E92F1E81DD6D44 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */; };
 		3E94DC8E7B2FBF3821C6DB7C /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		4AF3AD7177A1816C0C23C47F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -30,12 +31,14 @@
 		630F915E109515B0E519344D /* nav-icon-gray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B52583FD1E5551D7001E9B7C /* nav-icon-gray@3x.png */; };
 		6B413E48579E3DE35A9F27AB /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BDEA363422D818BC0040787F /* Settings.bundle */; };
 		6F3453258824763BEFEFB262 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */; };
+		727C05281512E8F86B60D706 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD3620E2D200EF213F08101 /* SceneDelegate.m */; };
 		743F3A349C8BBC13EBFD69BE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		7CF2E701DEC506258700E238 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		8059B5F4ED0B73C3F811D447 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		831FB33E81233961AF1DCA62 /* DiscourseKeyboardShortcuts.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4A208127B54FA300574A58 /* DiscourseKeyboardShortcuts.m */; };
 		8370892B1BC6FBB390EBF9D0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		86926817125C49686F7C05F8 /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC4F76C248B4F9C00785AF9 /* Dummy.swift */; };
+		88A5A24663D542F606856BF6 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD3620E2D200EF213F08101 /* SceneDelegate.m */; };
 		89049D5942FCBCEB03510FCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3675930C7AAA8D1B50076D97 /* Foundation.framework */; };
 		8AC134CBCEBB51A7CF9D282F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */; };
 		967A9B86915FCE3AADB1B416 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -63,6 +66,7 @@
 		D09E47561F2C996500AFDCBE /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E47551F2C996500AFDCBE /* Photos.framework */; };
 		D09E47801F2C9D6100AFDCBE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */; };
 		D6BAD7D1E5F0C771D96D710D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8103E0379C707B648ED89375 /* PrivacyInfo.xcprivacy */; };
+		DB883EFE514A6E366DDBCB11 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CBD3620E2D200EF213F08101 /* SceneDelegate.m */; };
 		E232507A6D366E39997F0B4B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3675930C7AAA8D1B50076D97 /* Foundation.framework */; };
 		E832FBD41DE7DBF457576AA9 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E47551F2C996500AFDCBE /* Photos.framework */; };
 		EAD407FE0E3BE47669AED4D7 /* RNBackgroundFetch+AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BD11887223DB333D00A2EFC9 /* RNBackgroundFetch+AppDelegate.m */; };
@@ -117,6 +121,7 @@
 		88E3D125B8F1D45A362101DF /* Pods-Discourse-APEX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-APEX.release.xcconfig"; path = "Target Support Files/Pods-Discourse-APEX/Pods-Discourse-APEX.release.xcconfig"; sourceTree = "<group>"; };
 		94936B1821688FB21A88C81D /* Pods-Discourse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse.debug.xcconfig"; path = "Target Support Files/Pods-Discourse/Pods-Discourse.debug.xcconfig"; sourceTree = "<group>"; };
 		98B6AB6E3066AF20E251C054 /* libPods-Discourse-APEX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Discourse-APEX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8EE4E8D919D108FF29CC3CA /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDelegate.h; path = Discourse/SceneDelegate.h; sourceTree = "<group>"; };
 		B0FB6D15E70D5B151A4FA3CB /* Pods-Discourse-Navodians.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-Navodians.debug.xcconfig"; path = "Target Support Files/Pods-Discourse-Navodians/Pods-Discourse-Navodians.debug.xcconfig"; sourceTree = "<group>"; };
 		B1CDF59676DC7FD89A990A1E /* Pods-Discourse-NITians.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Discourse-NITians.debug.xcconfig"; path = "Target Support Files/Pods-Discourse-NITians/Pods-Discourse-NITians.debug.xcconfig"; sourceTree = "<group>"; };
 		B52583FD1E5551D7001E9B7C /* nav-icon-gray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav-icon-gray@3x.png"; path = "../img/nav-icon-gray@3x.png"; sourceTree = "<group>"; };
@@ -133,6 +138,7 @@
 		BDC4F767248B48BC00785AF9 /* Discourse-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Discourse-Bridging-Header.h"; sourceTree = "<group>"; };
 		BDC4F76C248B4F9C00785AF9 /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
 		BDEA363422D818BC0040787F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		CBD3620E2D200EF213F08101 /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SceneDelegate.m; path = Discourse/SceneDelegate.m; sourceTree = "<group>"; };
 		D09E47551F2C996500AFDCBE /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		D09E477F1F2C9D6100AFDCBE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -208,6 +214,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				A8EE4E8D919D108FF29CC3CA /* SceneDelegate.h */,
+				CBD3620E2D200EF213F08101 /* SceneDelegate.m */,
 				BDC4F76C248B4F9C00785AF9 /* Dummy.swift */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -682,6 +690,7 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/react-native-blob-util/ReactNativeBlobUtilPrivacyInfo.bundle",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Brands.ttf",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Regular.ttf",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Solid.ttf",
@@ -697,6 +706,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ReactNativeBlobUtilPrivacyInfo.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
@@ -776,6 +786,7 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/react-native-blob-util/ReactNativeBlobUtilPrivacyInfo.bundle",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Brands.ttf",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Regular.ttf",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Solid.ttf",
@@ -791,6 +802,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ReactNativeBlobUtilPrivacyInfo.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
@@ -816,6 +828,7 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/react-native-blob-util/ReactNativeBlobUtilPrivacyInfo.bundle",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Brands.ttf",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Regular.ttf",
 				"${PODS_ROOT}/../../node_modules/@react-native-vector-icons/fontawesome5/fonts/FontAwesome5_Solid.ttf",
@@ -831,6 +844,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ReactNativeBlobUtilPrivacyInfo.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
@@ -931,6 +945,7 @@
 			files = (
 				ABDADAB3FD02F90A26DBA06D /* DiscourseKeyboardShortcuts.m in Sources */,
 				967A9B86915FCE3AADB1B416 /* AppDelegate.m in Sources */,
+				2F0DFD29B143EEE35904E47A /* SceneDelegate.m in Sources */,
 				4AF3AD7177A1816C0C23C47F /* main.m in Sources */,
 				A440E8A60D272BF348B8EE11 /* Dummy.swift in Sources */,
 				FF76E2F9369AA05DFB88F445 /* RNBackgroundFetch+AppDelegate.m in Sources */,
@@ -943,6 +958,7 @@
 			files = (
 				BD4A208227B54FA300574A58 /* DiscourseKeyboardShortcuts.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				DB883EFE514A6E366DDBCB11 /* SceneDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				BDC4F76D248B4F9C00785AF9 /* Dummy.swift in Sources */,
 				BD11887323DB333E00A2EFC9 /* RNBackgroundFetch+AppDelegate.m in Sources */,
@@ -955,6 +971,7 @@
 			files = (
 				831FB33E81233961AF1DCA62 /* DiscourseKeyboardShortcuts.m in Sources */,
 				1DB0E9831F5581EE32CCBAA6 /* AppDelegate.m in Sources */,
+				88A5A24663D542F606856BF6 /* SceneDelegate.m in Sources */,
 				BA8A6A81E4691C5BD784ADDD /* main.m in Sources */,
 				86926817125C49686F7C05F8 /* Dummy.swift in Sources */,
 				986D5CE2F572671041E3CBC3 /* RNBackgroundFetch+AppDelegate.m in Sources */,
@@ -967,6 +984,7 @@
 			files = (
 				281E240BE3B73B2419FAE352 /* DiscourseKeyboardShortcuts.m in Sources */,
 				8059B5F4ED0B73C3F811D447 /* AppDelegate.m in Sources */,
+				727C05281512E8F86B60D706 /* SceneDelegate.m in Sources */,
 				0CA9CCDAEEDC567F97332542 /* main.m in Sources */,
 				519E533E36CA52000183DD27 /* Dummy.swift in Sources */,
 				EAD407FE0E3BE47669AED4D7 /* RNBackgroundFetch+AppDelegate.m in Sources */,
@@ -1397,7 +1415,10 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -1453,7 +1474,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

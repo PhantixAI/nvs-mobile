@@ -26,6 +26,10 @@
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
+  // SceneDelegate now owns window creation (iOS 27 traps apps that never
+  // adopt UIScene lifecycle) -- see SceneDelegate.m's scene:willConnectToSession:options:.
+  self.automaticallyLoadReactNativeWindow = NO;
+
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;

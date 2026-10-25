@@ -451,10 +451,22 @@
 						LastSwiftMigration = 1150;
 						ProvisioningStyle = Manual;
 					};
+					69CEBA73E7FD2071A7589BE8 = {
+						DevelopmentTeam = X8JMJWZ8FH;
+						ProvisioningStyle = Automatic;
+					};
 					BD9F665C23F5B02C001001B3 = {
 						CreatedOnToolsVersion = 11.2.1;
 						DevelopmentTeam = 6T3LU73T8S;
 						ProvisioningStyle = Manual;
+					};
+					C4231B26995B20109EBD8A3D = {
+						DevelopmentTeam = X8JMJWZ8FH;
+						ProvisioningStyle = Automatic;
+					};
+					F1FEE62CB2BC48F17FDDA8C2 = {
+						DevelopmentTeam = X8JMJWZ8FH;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1041,7 +1053,7 @@
 				CODE_SIGN_ENTITLEMENTS = navodians/Navodians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
@@ -1060,7 +1072,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1087,7 +1099,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
@@ -1106,7 +1118,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1133,7 +1145,7 @@
 				CODE_SIGN_ENTITLEMENTS = Discourse/Discourse.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEVELOPMENT_TEAM = 6T3LU73T8S;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6T3LU73T8S;
 				ENABLE_BITCODE = NO;
@@ -1151,7 +1163,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1180,7 +1192,7 @@
 				CODE_SIGN_ENTITLEMENTS = nitians/NITians.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
@@ -1198,7 +1210,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1229,7 +1241,7 @@
 				CODE_SIGN_ENTITLEMENTS = nitians/NITians.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
@@ -1248,7 +1260,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1276,7 +1288,7 @@
 				CODE_SIGN_ENTITLEMENTS = iitians/APEX.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
@@ -1295,7 +1307,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1323,7 +1335,7 @@
 				CODE_SIGN_ENTITLEMENTS = navodians/Navodians.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
@@ -1341,7 +1353,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1415,10 +1427,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -1474,10 +1483,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift$(inherited)";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -1507,7 +1513,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.discourse.DiscourseApp.ShareExtension;
@@ -1543,7 +1549,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.discourse.DiscourseApp.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1567,7 +1573,7 @@
 				CODE_SIGN_ENTITLEMENTS = iitians/APEX.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 707;
+				CURRENT_PROJECT_VERSION = 708;
 				DEVELOPMENT_TEAM = X8JMJWZ8FH;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X8JMJWZ8FH;
 				ENABLE_BITCODE = NO;
@@ -1585,7 +1591,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Discourse\"/**",
 				);
-				MARKETING_VERSION = 26.10.7;
+				MARKETING_VERSION = 26.10.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

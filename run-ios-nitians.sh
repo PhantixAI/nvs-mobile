@@ -2,8 +2,15 @@
 # Run the NITians app on iOS Simulator
 set -e
 
-echo "$(pwd)/.env.nitians" > /tmp/envfile
-trap 'rm -f /tmp/envfile' EXIT
+# NOTE: do NOT write /tmp/envfile here. react-native-config's iOS codegen
+# (node_modules/react-native-config/ios/ReactNativeConfig/ReadDotEnv.rb)
+# checks that single machine-wide file BEFORE the per-target ENVFILE Xcode
+# build setting that's already correctly wired in project.pbxproj for this
+# scheme -- and it's only cleaned up by a `trap ... EXIT` that never fires on
+# a crash/kill/interrupted build. A stale leftover from one flavor silently
+# hijacks every later iOS build on this machine, including production
+# archives built outside these scripts entirely (confirmed root cause of the
+# NITians-loads-APEX production bug, Oct 2026).
 
 SCHEME="NITians"
 BUNDLE_ID="in.nitians.app"

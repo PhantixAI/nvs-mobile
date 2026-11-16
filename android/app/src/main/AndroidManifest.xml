@@ -38,6 +38,7 @@
           android:label="@string/app_name"
           android:launchMode="singleTask"
           android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+          android:windowSoftInputMode="adjustResize"
           android:exported="true">
           <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -48,17 +49,27 @@
               <action android:name="android.intent.action.VIEW" />
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
-              <data android:scheme="discourse" android:host="auth_redirect" />
+              <data android:scheme="${appUrlScheme}" android:host="auth_redirect" />
           </intent-filter>
           <intent-filter>
               <action android:name="android.intent.action.VIEW" />
               <category android:name="android.intent.category.DEFAULT" />
               <category android:name="android.intent.category.BROWSABLE" />
-              <data android:scheme="discourse" android:host="open" />
+              <data android:scheme="${appUrlScheme}" android:host="open" />
           </intent-filter>
           <intent-filter>
               <action android:name="open_topic" />
               <category android:name="android.intent.category.DEFAULT" />
+          </intent-filter>
+          <!-- App Links: opens the app directly for https://<appLinkHost>/... URLs
+               (e.g. shared in Messages) instead of falling through to the browser.
+               autoVerify triggers Android's Digital Asset Links check against
+               https://<appLinkHost>/.well-known/assetlinks.json on install. -->
+          <intent-filter android:autoVerify="true">
+              <action android:name="android.intent.action.VIEW" />
+              <category android:name="android.intent.category.DEFAULT" />
+              <category android:name="android.intent.category.BROWSABLE" />
+              <data android:scheme="https" android:host="${appLinkHost}" />
           </intent-filter>
       </activity>
     </application>

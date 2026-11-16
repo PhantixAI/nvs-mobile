@@ -3,6 +3,7 @@
 
 import React, { useContext } from 'react';
 import {
+  Image,
   Linking,
   Platform,
   StyleSheet,
@@ -11,24 +12,26 @@ import {
 } from 'react-native';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { ThemeContext } from '../../ThemeContext';
+import AppConfig from '../../AppConfig';
+import appLogo from '../../appLogo';
 
 const NavigationBar = props => {
   const theme = useContext(ThemeContext);
-  const discourseUrl = 'https://www.discourse.org';
 
-  const renderCogButton = () => {
+  const renderAuthButton = () => {
     if (Platform.OS !== 'android') {
       return;
     }
 
+    const isLoggedIn = props.isLoggedIn;
     return (
       <TouchableHighlight
-        style={{ ...styles.androidSettingsButton }}
+        style={styles.androidAuthButton}
         underlayColor={'transparent'}
-        onPress={props.onDidPressAndroidSettingsIcon}
+        onPress={isLoggedIn ? props.onDidPressLogout : props.onDidPressLogin}
       >
         <FontAwesome5
-          name={'cog'}
+          name={isLoggedIn ? 'sign-out-alt' : 'sign-in-alt'}
           size={20}
           style={{ color: theme.grayUI }}
           iconStyle="solid"
@@ -38,9 +41,12 @@ const NavigationBar = props => {
   };
 
   const renderPlusButton = () => {
+    if (!props.onDidPressPlusIcon) {
+      return null;
+    }
     return (
       <TouchableHighlight
-        style={{ ...styles.plusButton }}
+        style={styles.plusButton}
         underlayColor={'transparent'}
         testID="nav-plus-icon"
         onPress={props.onDidPressPlusIcon}
@@ -60,17 +66,16 @@ const NavigationBar = props => {
       <View style={styles.titleContainer}>
         <TouchableHighlight
           underlayColor={'transparent'}
-          onPress={() => Linking.openURL(discourseUrl)}
+          onPress={() => Linking.openURL(AppConfig.siteURL)}
         >
-          <FontAwesome5
-            name={'discourse'}
-            size={26}
-            iconStyle="brand"
-            style={{ color: theme.grayTitle }}
+          <Image
+            source={appLogo}
+            style={{ width: 26, height: 26 }}
+            resizeMode="contain"
           />
         </TouchableHighlight>
       </View>
-      {renderCogButton()}
+      {renderAuthButton()}
       {renderPlusButton()}
       <View
         style={[styles.separator, { backgroundColor: theme.grayBackground }]}
@@ -97,7 +102,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
-  androidSettingsButton: {
+  androidAuthButton: {
     position: 'absolute',
     right: 6,
     top: 6,

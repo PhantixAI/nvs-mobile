@@ -4,6 +4,7 @@
 import _ from 'lodash';
 import { Alert, NativeModules, Platform } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import notifee from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SafariWebAuth from 'react-native-safari-web-auth';
 import Site from './site';
@@ -12,6 +13,7 @@ import DeviceInfo from 'react-native-device-info';
 import JSEncrypt from './../lib/jsencrypt';
 import randomBytes from './../lib/random-bytes';
 import i18n from 'i18n-js';
+import AppConfig from './AppConfig';
 
 const { DiscourseKeyboardShortcuts } = NativeModules;
 const REFRESH_THROTTLE_MS = 5000;
@@ -21,9 +23,9 @@ class SiteManager {
   _subscribers = [];
   sites = [];
   activeSite = null;
-  customScheme = 'discourse';
-  urlScheme = 'discourse://auth_redirect';
-  deviceName = 'Discourse - Unknown Mobile Device';
+  customScheme = AppConfig.urlScheme;
+  urlScheme = `${AppConfig.urlScheme}://auth_redirect`;
+  deviceName = `${AppConfig.devicePrefix} - Unknown Mobile Device`;
   hotTopicsHidden = false;
   siteURLsHidden = false;
 
@@ -37,7 +39,7 @@ class SiteManager {
     });
 
     DeviceInfo.getDeviceName().then(name => {
-      this.deviceName = `Discourse - ${name}`;
+      this.deviceName = `${AppConfig.devicePrefix} - ${name}`;
     });
   }
 
@@ -138,12 +140,63 @@ class SiteManager {
           PushNotificationIOS.setApplicationIconBadgeNumber(this.totalUnread());
         }
       });
+    } else if (Platform.OS === 'android') {
+      // the server also sets the FCM payload's android.notification.notification_count
+      // for an instant update on push delivery; this call keeps the badge correct
+      // whenever the app itself refreshes (foreground timer, notification dismissal).
+      notifee
+        .setBadgeCount(this.totalUnread())
+        .catch(e => console.log('Failed to set Android badge count: ', e));
     }
   }
 
   save() {
     AsyncStorage.setItem('@Discourse.sites', JSON.stringify(this.sites));
   }
+
+  // Clears the app's stored auth token for a site, independent of the site's
+  // own web session — used when the web session gets logged out (e.g. via
+  // Discourse's own in-page menu) so the app falls back to its auth gate
+  // instead of showing the site's logged-out page inside the WebView.
+  logOut(site) {
+    site.authToken = null;
+    site.hasPush = null;
+    site.apiVersion = null;
+    this.save();
+    this._onChange();
+  }
+
+  // Discourse sometimes embeds a ready-to-use one-time-password directly in
+  // the auth_redirect payload (scope `one_time_password`), rather than
+  // requiring a follow-up POST to /user-api-key/otp — that follow-up call can
+  // be rejected (403) depending on how the key was granted. setPendingOtp /
+  // takePendingOtp let the deep-link handler hand that value to the screen
+  // that builds the authenticated WebView URL, consumed exactly once.
+  setPendingOtp(otp) {
+    this._pendingOtp = otp;
+  }
+
+  takePendingOtp() {
+    const otp = this._pendingOtp;
+    this._pendingOtp = null;
+    return otp;
+  }
+
+  // Single-site mode's WebView is the entire app (see SingleSiteWebView.js) —
+  // there's no separate browser screen to navigate to for a tapped push
+  // notification, so hand the target URL to the already-mounted WebView via
+  // this pending-value + _onChange notify, same pattern as pendingOtp above.
+  openDeepLink(url) {
+    this._pendingDeepLink = url;
+    this._onChange();
+  }
+
+  takePendingDeepLink() {
+    const url = this._pendingDeepLink;
+    this._pendingDeepLink = null;
+    return url;
+  }
+
 
   ensureRSAKeys() {
     return new Promise(resolve => {
@@ -185,7 +238,31 @@ class SiteManager {
           this.sites = JSON.parse(json).map(obj => {
             return new Site(obj);
           });
+        }
 
+        if (AppConfig.siteURL) {
+          // White-label builds are locked to a single site. If persisted storage
+          // holds a different site (e.g. a previous build baked in the wrong
+          // flavor's config), AppConfig.siteURL is still the source of truth —
+          // discard the stale entry rather than getting stuck on it forever.
+          if (this.sites.length > 0 && !this.sites.some(s => s.url === AppConfig.siteURL)) {
+            this.sites = [];
+          }
+
+          if (this.sites.length === 0) {
+            const lockedSite = new Site({ url: AppConfig.siteURL });
+            this.sites.push(lockedSite);
+            this.save();
+            lockedSite.ensureLatestApi().then(s => {
+              if (s.title) { lockedSite.title = s.title; }
+              if (s.icon)  { lockedSite.icon  = s.icon;  }
+              this.save();
+              this._onChange();
+            }).catch(() => {});
+          }
+        }
+
+        if (json) {
           let promises = [];
 
           this.sites.forEach((site, index) => {
@@ -414,6 +491,11 @@ class SiteManager {
     this._nonceSite.hasPush = decrypted.push;
     this._nonceSite.apiVersion = decrypted.api;
 
+    // Persist the token immediately — otherwise it only reaches disk via the
+    // throttled background refresh, which can lose the race if the app is
+    // closed shortly after login.
+    this.save();
+
     // cause we want to stop rendering connect
     this._onChange();
 
@@ -437,16 +519,13 @@ class SiteManager {
           return this.generateNonce(site);
         })
         .then(nonce => {
-          let basePushUrl = 'https://api.discourse.org';
-          //let basePushUrl = "http://l.discourse:3000"
-
-          let scopes = 'notifications,session_info,one_time_password';
+          let scopes = 'notifications,session_info,one_time_password,read';
 
           let params = {
             scopes: scopes,
             client_id: clientId,
             nonce: nonce,
-            push_url: basePushUrl + '/api/publish_' + Platform.OS,
+            platform: Platform.OS,
             auth_redirect: this.urlScheme,
             application_name: this.deviceName,
             public_key: this.rsaKeys.public,
@@ -489,17 +568,23 @@ class SiteManager {
 
       if (authRequest) {
         const urlParams = this.parseURLparameters(authRequest);
+        let OTP;
+
+        if (urlParams.oneTimePassword) {
+          OTP = this.decryptHelper(urlParams.oneTimePassword);
+          // Stage it before handleAuthPayload triggers _onChange, so callers
+          // that react to the authToken update (e.g. SingleSiteWebView) can
+          // consume it via takePendingOtp() instead of the follow-up POST to
+          // /user-api-key/otp, which can be rejected (403) depending on how
+          // the key was granted.
+          this.setPendingOtp(OTP);
+        }
 
         if (urlParams.payload) {
           this.handleAuthPayload(urlParams.payload);
         }
 
-        if (urlParams.oneTimePassword) {
-          const OTP = this.decryptHelper(urlParams.oneTimePassword);
-          return `${this.activeSite.url}/session/otp/${OTP}`;
-        } else {
-          return this.activeSite.url;
-        }
+        return OTP ? `${this.activeSite.url}/session/otp/${OTP}` : this.activeSite.url;
       }
     } catch (e) {
       console.log('auth process cancelled: ', e);

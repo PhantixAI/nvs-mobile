@@ -26,6 +26,7 @@ import {
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import Screens from './screens';
+import SingleSiteWebView from './screens/SingleSiteWebView';
 import Site from './site';
 import SiteManager from './site_manager';
 import SafariView from 'react-native-safari-view';
@@ -41,6 +42,7 @@ import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 import { BlurView } from '@react-native-community/blur';
 
 import BackgroundFetch from './platforms/background-fetch';
+import AppConfig from './AppConfig';
 
 const { DiscourseKeyboardShortcuts } = NativeModules;
 
@@ -161,22 +163,24 @@ class Discourse extends React.Component {
         ToastAndroid.show(message, ToastAndroid.LONG);
       });
 
-      // notification clicked while app is in background/closed
+      // notification clicked while app is backgrounded (not killed)
       firebaseMessaging.onNotificationOpenedApp(async remoteMessage => {
         console.log('onNotificationOpenedApp');
-        let url = null;
-
-        if (remoteMessage.data.payload) {
-          // new v1 FCM API
-          const payload = JSON.parse(remoteMessage.data.payload);
-          url = payload.discourse_url;
-        } else {
-          // legacy FCM API
-          url = remoteMessage.data.discourse_url;
-        }
+        const url = this._extractDiscourseUrl(remoteMessage);
 
         if (url) {
-          this.openUrl(url);
+          this._deliverNotificationUrl(url);
+        }
+      });
+
+      // app launched from a killed state by tapping a notification
+      firebaseMessaging.getInitialNotification().then(remoteMessage => {
+        if (remoteMessage) {
+          const url = this._extractDiscourseUrl(remoteMessage);
+
+          if (url) {
+            this._deliverNotificationUrl(url);
+          }
         }
       });
     }
@@ -220,6 +224,29 @@ class Discourse extends React.Component {
 
     if (url) {
       this._siteManager.setActiveSite(url);
+      this._deliverNotificationUrl(url);
+    }
+  }
+
+  _extractDiscourseUrl(remoteMessage) {
+    if (remoteMessage.data.payload) {
+      // new v1 FCM API
+      const payload = JSON.parse(remoteMessage.data.payload);
+      return payload.discourse_url;
+    }
+
+    // legacy FCM API
+    return remoteMessage.data.discourse_url;
+  }
+
+  // Single-site (white-label) builds are one full-screen WebView with no
+  // separate browser chrome — hand the URL to the already-mounted WebView
+  // via siteManager instead of pushing the multi-site "WebView" screen
+  // (which has its own URL bar/share button, wrong for this app shape).
+  _deliverNotificationUrl(url) {
+    if (AppConfig.siteURL) {
+      this._siteManager.openDeepLink(url);
+    } else {
       this.openUrl(url);
     }
   }
@@ -227,12 +254,24 @@ class Discourse extends React.Component {
   async _handleOpenUrl(event) {
     console.log('_handleOpenUrl', event);
 
-    if (event.url.startsWith('discourse://')) {
+    if (event.url.startsWith(`${AppConfig.urlScheme}://`)) {
       const params = this._siteManager.parseURLparameters(event.url);
       const site = this._siteManager.activeSite;
 
       if (Platform.OS === 'ios' && Settings.get('external_links_svc')) {
         SafariView.dismiss();
+      }
+
+      // Discourse sometimes embeds a ready-to-use OTP alongside the auth
+      // payload (scope `one_time_password`) rather than requiring a
+      // follow-up POST to /user-api-key/otp — that follow-up call can be
+      // rejected (403) depending on how the key was granted. In single-site
+      // mode, stage it for SingleSiteWebView to use directly; this must
+      // happen before handleAuthPayload below, which triggers the state
+      // update SingleSiteWebView reacts to.
+      if (params.oneTimePassword && AppConfig.siteURL) {
+        const OTP = this._siteManager.decryptHelper(params.oneTimePassword);
+        this._siteManager.setPendingOtp(OTP);
       }
 
       // initial auth payload
@@ -256,8 +295,11 @@ class Discourse extends React.Component {
         }
       }
 
-      // one-time-password received, launch site with it
-      if (params.oneTimePassword) {
+      // one-time-password received, launch site with it.
+      // Single-site (white-label) mode is staged above instead — SingleSiteWebView
+      // uses it directly, since pushing the generic WebView screen here would show
+      // its browser-style chrome on top of it.
+      if (params.oneTimePassword && !AppConfig.siteURL) {
         const OTP = this._siteManager.decryptHelper(params.oneTimePassword);
         this.openUrl(`${site.url}/session/otp/${OTP}`);
       }
@@ -285,7 +327,24 @@ class Discourse extends React.Component {
       }
     } else if (event.url !== null) {
       // Handle URLs from Universal Links
-      if (this._siteManager.urlInSites(event.url)) {
+      // Ignore Discourse's own auth-flow URLs (e.g. /auth/apple/callback) — these
+      // can reach us as Universal Links (iOS caches the domain association and may
+      // still route them here even after excluding these paths server-side), and
+      // loading them into a fresh WebView here has no session cookies, breaking
+      // Sign in with Apple/Google. The real browser handling the OAuth flow is
+      // expected to complete it; the app only needs the final iitians:// redirect,
+      // handled by the custom-scheme branch above.
+      if (/\/(auth|user-api-key|session)\//.test(event.url)) {
+        return;
+      }
+      if (AppConfig.siteURL) {
+        // Single-site (white-label) builds have one full-screen WebView with no
+        // separate browser chrome — hand the URL to it directly, same as a
+        // notification-tap deep link (see _deliverNotificationUrl), instead of
+        // pushing the multi-site "WebView" screen or a Custom Tab, both of
+        // which show browser-style chrome that's wrong for this app shape.
+        this._siteManager.openDeepLink(event.url);
+      } else if (this._siteManager.urlInSites(event.url)) {
         this.openUrl(event.url);
       } else {
         this._addSite(event.url);
@@ -445,17 +504,11 @@ class Discourse extends React.Component {
     }
 
     if (Platform.OS === 'android') {
-      AsyncStorage.getItem('@Discourse.androidCustomTabs').then(value => {
-        if (value === 'true') {
-          CustomTabs.openURL(url, {
-            enableUrlBarHiding: true,
-            showPageTitle: false,
-          }).catch(err => {
-            console.error(err);
-          });
-        } else {
-          Linking.openURL(url);
-        }
+      CustomTabs.openURL(url, {
+        enableUrlBarHiding: true,
+        showPageTitle: false,
+      }).catch(err => {
+        Linking.openURL(url);
       });
     }
   }
@@ -526,89 +579,94 @@ class Discourse extends React.Component {
             }}
           >
             <Stack.Screen name="HomeWrapper">
-              {() => (
-                <Tab.Navigator
-                  screenOptions={{
-                    headerShown: false,
-
-                    tabBarStyle: {
-                      position: 'absolute',
-                      borderTopWidth: StyleSheet.hairlineWidth,
-                      borderTopColor: theme.grayBorder,
-                    },
-                    tabBarLabelStyle: {
-                      fontSize: this.state.largerUI ? 16 : 12,
-                    },
-                    tabBarActiveTintColor: theme.blueCallToAction,
-                    tabBarInactiveTintColor: theme.grayTabInactiveColor,
-                    tabBarBackground: () => this._blurView(theme.name),
-                  }}
-                >
-                  <Tab.Screen
-                    name="Home"
-                    options={{
-                      title: i18n.t('home'),
-                      tabBarIcon: ({ color }) => (
-                        <FontAwesome5
-                          name={'home'}
-                          size={18}
-                          color={color}
-                          iconStyle="solid"
-                        />
-                      ),
+              {() =>
+                AppConfig.siteURL ? (
+                  // Single-site (white-label) mode: full-screen Discourse web app
+                  <SingleSiteWebView screenProps={screenProps} />
+                ) : (
+                  // Multi-site mode: standard tab navigator
+                  <Tab.Navigator
+                    screenOptions={{
+                      headerShown: false,
+                      tabBarStyle: {
+                        position: 'absolute',
+                        borderTopWidth: StyleSheet.hairlineWidth,
+                        borderTopColor: theme.grayBorder,
+                      },
+                      tabBarLabelStyle: {
+                        fontSize: this.state.largerUI ? 16 : 12,
+                      },
+                      tabBarActiveTintColor: theme.blueCallToAction,
+                      tabBarInactiveTintColor: theme.grayTabInactiveColor,
+                      tabBarBackground: () => this._blurView(theme.name),
                     }}
                   >
-                    {props => (
-                      <Screens.Home
-                        {...props}
-                        screenProps={{ ...screenProps }}
-                      />
-                    )}
-                  </Tab.Screen>
-                  <Tab.Screen
-                    name="Discover"
-                    options={{
-                      title: i18n.t('discover'),
-                      tabBarIcon: ({ color }) => (
-                        <FontAwesome5
-                          name={'compass'}
-                          size={18}
-                          color={color}
-                          iconStyle="solid"
+                    <Tab.Screen
+                      name="Home"
+                      options={{
+                        title: i18n.t('home'),
+                        tabBarIcon: ({ color }) => (
+                          <FontAwesome5
+                            name={'home'}
+                            size={18}
+                            color={color}
+                            iconStyle="solid"
+                          />
+                        ),
+                      }}
+                    >
+                      {props => (
+                        <Screens.Home
+                          {...props}
+                          screenProps={{ ...screenProps }}
                         />
-                      ),
-                    }}
-                  >
-                    {props => (
-                      <Screens.Discover
-                        {...props}
-                        screenProps={{ ...screenProps }}
-                      />
-                    )}
-                  </Tab.Screen>
-                  <Tab.Screen
-                    name={'Notifications'}
-                    options={{
-                      title: i18n.t('notifications'),
-                      tabBarIcon: ({ color }) => (
-                        <FontAwesome5
-                          name={'bell'}
-                          size={18}
-                          color={color}
-                          iconStyle="solid"
+                      )}
+                    </Tab.Screen>
+                    <Tab.Screen
+                      name="Discover"
+                      options={{
+                        title: i18n.t('discover'),
+                        tabBarIcon: ({ color }) => (
+                          <FontAwesome5
+                            name={'compass'}
+                            size={18}
+                            color={color}
+                            iconStyle="solid"
+                          />
+                        ),
+                      }}
+                    >
+                      {props => (
+                        <Screens.Discover
+                          {...props}
+                          screenProps={{ ...screenProps }}
                         />
-                      ),
-                    }}
-                  >
-                    {props => (
-                      <Screens.Notifications
-                        {...props}
-                        screenProps={{ ...screenProps }}
-                      />
-                    )}
-                  </Tab.Screen>
-                </Tab.Navigator>
-              )}
+                      )}
+                    </Tab.Screen>
+                    <Tab.Screen
+                      name={'Notifications'}
+                      options={{
+                        title: i18n.t('notifications'),
+                        tabBarIcon: ({ color }) => (
+                          <FontAwesome5
+                            name={'bell'}
+                            size={18}
+                            color={color}
+                            iconStyle="solid"
+                          />
+                        ),
+                      }}
+                    >
+                      {props => (
+                        <Screens.Notifications
+                          {...props}
+                          screenProps={{ ...screenProps }}
+                        />
+                      )}
+                    </Tab.Screen>
+                  </Tab.Navigator>
+                )
+              }
             </Stack.Screen>
             <Stack.Screen
               name={'Settings'}

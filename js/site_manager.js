@@ -4,6 +4,7 @@
 import _ from 'lodash';
 import { Alert, NativeModules, Platform } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import notifee from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SafariWebAuth from 'react-native-safari-web-auth';
 import Site from './site';
@@ -139,6 +140,13 @@ class SiteManager {
           PushNotificationIOS.setApplicationIconBadgeNumber(this.totalUnread());
         }
       });
+    } else if (Platform.OS === 'android') {
+      // the server also sets the FCM payload's android.notification.notification_count
+      // for an instant update on push delivery; this call keeps the badge correct
+      // whenever the app itself refreshes (foreground timer, notification dismissal).
+      notifee
+        .setBadgeCount(this.totalUnread())
+        .catch(e => console.log('Failed to set Android badge count: ', e));
     }
   }
 

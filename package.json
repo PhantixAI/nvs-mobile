@@ -20,6 +20,7 @@
     "test-ipad": "detox test --configuration ios.sim.debug -n 'iPad (10th generation)'"
   },
   "dependencies": {
+    "@notifee/react-native": "^9.1.8",
     "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-community/blur": "^4.4.0",
     "@react-native-community/push-notification-ios": "^1.11.0",

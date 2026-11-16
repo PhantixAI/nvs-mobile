@@ -2555,6 +2555,11 @@ PODS:
     - Yoga
   - RNLocalize (2.2.6):
     - React-Core
+  - RNNotifee (9.1.8):
+    - React-Core
+    - RNNotifee/NotifeeCore (= 9.1.8)
+  - RNNotifee/NotifeeCore (9.1.8):
+    - React-Core
   - RNReanimated (4.1.0):
     - boost
     - DoubleConversion
@@ -2975,6 +2980,7 @@ DEPENDENCIES:
   - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNLocalize (from `../node_modules/react-native-localize`)
+  - "RNNotifee (from `../node_modules/@notifee/react-native`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
@@ -3164,6 +3170,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
+  RNNotifee:
+    :path: "../node_modules/@notifee/react-native"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -3267,6 +3275,7 @@ SPEC CHECKSUMS:
   RNFlashList: 3b0c6a34ba86318f897ff55ff7482b7e8ae18996
   RNGestureHandler: 4f7cc97a71d4fe0fcba38c94acdd969f5f17c91c
   RNLocalize: d4b8af4e442d4bcca54e68fc687a2129b4d71a81
+  RNNotifee: 4a6ee5c7deaf00e005050052d73ee6315dff7ec9
   RNReanimated: 1163d28eb3e11e5b24a932b10fb17c168ee1c9a4
   RNScreens: 5c7f22b19ee2e900e5de2c578471aeb153d1e502
   RNSentry: 7d23f76c768aa2ec59c9cb3efc6299bc54699deb
